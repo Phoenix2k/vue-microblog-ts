@@ -1,9 +1,7 @@
-import { Request, Response, Router } from 'express';
-import * as mongoose from 'mongoose';
-import { PostSchema } from '../../models/post';
+import { Router } from 'express';
+import mongoose from 'mongoose';
+import { PostController } from '../../controllers/post';
 import { BaseRoute } from '../../routes';
-
-const PostCollection = mongoose.model( 'Post', PostSchema );
 
 /**
  * /api/ route
@@ -13,6 +11,7 @@ const PostCollection = mongoose.model( 'Post', PostSchema );
 export class ApiRoute extends BaseRoute {
 
 	public static API_ROUTE: string = '/api';
+	public static POST_CONTROLLER: PostController = new PostController();
 
 	/**
 	 * Creates the route
@@ -23,15 +22,12 @@ export class ApiRoute extends BaseRoute {
 	 * @returns {void}
 	 */
 	public static create( router: Router ): void {
-		console.log( 'API route created ✓' );
 		mongoose.set( 'debug', 'production' !== process.env.NODE_ENV );
-		router.get( this.API_ROUTE, async ( request: Request, response: Response ) => {
-			await new ApiRoute().getPosts( request, response ).catch( error => console.error( error ) );
-		} )
-		.post( this.API_ROUTE, async ( request: Request, response: Response ) => {
-			console.log( request.body );
-			await new ApiRoute().createPost( request, response ).catch( error => console.error( error ) );
-		} );
+		router.route( this.API_ROUTE ).post( this.POST_CONTROLLER.createPost );
+		router.route( this.API_ROUTE ).delete( this.POST_CONTROLLER.deletePost );
+		router.route( this.API_ROUTE ).get( this.POST_CONTROLLER.getPosts );
+		router.route( this.API_ROUTE ).put( this.POST_CONTROLLER.updatePost );
+		console.log( 'API route created ✓' );
 	}
 
 	/**
@@ -42,37 +38,5 @@ export class ApiRoute extends BaseRoute {
 	 */
 	constructor() {
 		super();
-	}
-
-	/**
-	 * Loads posts from the database
-	 *
-	 * @class ApiRoute
-	 * @method createPost
-	 * @returns {void}
-	 */
-	private async createPost( request: Request, response: Response ): Promise<any> {
-		return new PostCollection( request.body ).save( ( err, post ) => {
-			if ( err ) {
-				response.send( err );
-			}
-			response.json( post );
-		} );
-	}
-
-	/**
-	 * Loads posts from the database
-	 *
-	 * @class ApiRoute
-	 * @method getPosts
-	 * @returns {Promise<mongoose.Document[]>} Array of posts stored in the database.
-	 */
-	private async getPosts( request: Request, response: Response ): Promise<mongoose.Document[]> {
-		return PostCollection.find( {}, ( error, posts ) => {
-			if ( error ) {
-				response.send( error );
-			}
-			response.json( posts );
-		} );
 	}
 }

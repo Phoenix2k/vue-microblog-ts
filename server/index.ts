@@ -1,8 +1,8 @@
-import * as cors from 'cors';
-import * as dotenv from 'dotenv';
-import * as express from 'express';
-import * as mongoose from 'mongoose';
-import * as path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
 import { ApiRoute } from './routes/api';
 import { IndexRoute } from './routes/index';
 
@@ -78,9 +78,9 @@ export class Server {
 	 * @returns {Promise<any>} Mongoose connection.
 	 */
 	private async mongoSetup(): Promise<any> {
-		return mongoose.connect( process.env.MONGO_URI, {
+		return process.env.MONGO_URI ? mongoose.connect( process.env.MONGO_URI, {
 			useNewUrlParser: true,
-		} );
+		} ) : Promise.reject( 'MONGO_URI not defined.' );
 	}
 
 	/**

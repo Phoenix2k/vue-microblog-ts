@@ -1,8 +1,6 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
-
-export const PostSchema = new Schema( {
+export const PostSchema = new mongoose.Schema( {
 	title: {
 		required: true,
 		type: String,
