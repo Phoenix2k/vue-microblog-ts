@@ -1,11 +1,11 @@
 {
-	"exec": "ts-node ./server",
+	"exec": "ts-node ./src/server",
 	"ext": "ts",
 	"ignore": [
 		"public/*"
 	],
 	"verbose": true,
 	"watch": [
-		"server"
+		"./src/server"
 	]
 }

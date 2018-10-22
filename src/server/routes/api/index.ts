@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { PostController } from '../../controllers/post';
 import { BaseRoute } from '../../routes';
 

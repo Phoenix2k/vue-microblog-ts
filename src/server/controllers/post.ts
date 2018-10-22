@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { PostSchema } from '../models/post';
 
 const PostsConnection = mongoose.model( 'Post', PostSchema );

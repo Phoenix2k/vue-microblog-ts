@@ -1,8 +1,8 @@
-import cors from 'cors';
-import dotenv from 'dotenv';
-import express from 'express';
-import mongoose from 'mongoose';
-import path from 'path';
+import * as cors from 'cors';
+import * as dotenv from 'dotenv';
+import * as express from 'express';
+import * as mongoose from 'mongoose';
+import * as path from 'path';
 import { ApiRoute } from './routes/api';
 import { IndexRoute } from './routes/index';
 
@@ -51,7 +51,7 @@ export class Server {
 	 * @returns {void}
 	 */
 	private config(): void {
-		this.app.use( express.static( path.join( __dirname, '../public' ) ) );
+		this.app.use( express.static( path.join( __dirname, '../../dist' ) ) );
 		this.app.use( express.json() );
 		this.app.use( cors() );
 	}
