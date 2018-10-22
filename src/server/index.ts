@@ -51,7 +51,8 @@ export class Server {
 	 * @returns {void}
 	 */
 	private config(): void {
-		this.app.use( express.static( path.join( __dirname, '../../dist' ) ) );
+		const PUBLIC_FOLDER = 'production' === process.env.NODE_ENV ? '/public' : '../../public';
+		this.app.use( express.static( path.join( __dirname, PUBLIC_FOLDER ) ) );
 		this.app.use( express.json() );
 		this.app.use( cors() );
 	}
