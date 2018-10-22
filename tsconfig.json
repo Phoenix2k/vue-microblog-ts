@@ -2,17 +2,14 @@
 	"compilerOptions": {
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"noImplicitAny": false,
-		"outDir": "dist",
-		"removeComments": false,
-		"sourceMap": true,
+		"removeComments": true,
+		"sourceMap": false,
 		"suppressImplicitAnyIndexErrors": true,
 		"target": "ESNext"
 	},
 	"exclude": [
-		"dist",
 		"node_modules"
 	]
 }
