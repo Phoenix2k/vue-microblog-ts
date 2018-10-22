@@ -1,10 +1,21 @@
 {
   "author": "Niko Pettersen <niko.pettersen@gmail.com>",
+  "browserslist": [
+    "> 2%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "dependencies": {
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
-    "mongoose": "^5.3.4"
+    "mongoose": "^5.3.5",
+    "register-service-worker": "^1.5.2",
+    "vue": "^2.5.17",
+    "vue-class-component": "^6.3.2",
+    "vue-property-decorator": "^7.2.0",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "description": "Micro-blogging service based on Express, MongoDB and Vue.js",
   "devDependencies": {
@@ -12,10 +23,24 @@
     "@types/dotenv": "^4.0.3",
     "@types/express": "^4.16.0",
     "@types/mongoose": "^5.2.19",
+    "@cypress/webpack-preprocessor": "^3.0.0",
+    "@types/jest": "^23.3.7",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-e2e-cypress": "^3.0.5",
+    "@vue/cli-plugin-pwa": "^3.0.5",
+    "@vue/cli-plugin-typescript": "^3.0.5",
+    "@vue/cli-plugin-unit-jest": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-core": "7.0.0-bridge.0",
+    "node-sass": "^4.9.4",
     "nodemon": "^1.18.4",
+    "sass-loader": "^7.1.0",
+    "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.3"
+    "typescript": "^3.1.3",
+    "vue-template-compiler": "^2.5.17"
   },
   "keywords": [
     "express",
@@ -25,14 +50,21 @@
     "vue"
   ],
   "license": "MIT",
-  "main": "server/index.js",
+  "main": "server/main.js",
   "name": "micro-blog-ts",
   "scripts": {
-    "dev": "nodemon src/server/index.ts",
-    "build:server": "tsc --project tsconfig-server.json",
-    "lint": "tslint --project .",
-    "lint:fix": "tslint --fix .",
-    "start": "node server/index.js"
+    "dev:client": "vue-cli-service serve",
+    "dev:server": "nodemon --project tsconfig-server.json",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vue-cli-service build && touch ./public/.gitkeep",
+    "build:server": "tsc --project tsconfig-server.json && touch ./server/.gitkeep",
+    "lint": "npm run lint:client && npm run lint:server",
+    "lint:client": "tslint --project tsconfig.json",
+    "lint:fix": "tslint --fix --project tsconfig.json && tslint --fix --project tsconfig-server.json",
+    "lint:server": "tslint --project tsconfig-server.json",
+    "start": "node server/index.js",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service  test:unit"
   },
   "version": "1.0.0"
 }

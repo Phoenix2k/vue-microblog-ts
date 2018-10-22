@@ -1,15 +1,44 @@
 {
 	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
 		"emitDecoratorMetadata": true,
+		"esModuleInterop": true,
 		"experimentalDecorators": true,
+		"importHelpers": true,
+		"jsx": "preserve",
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext",
+			"scripthost"
+		],
+		"module": "esnext",
 		"moduleResolution": "Node",
 		"noImplicitAny": false,
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		},
 		"removeComments": true,
-		"sourceMap": false,
+		"sourceMap": true,
+		"strict": true,
 		"suppressImplicitAnyIndexErrors": true,
-		"target": "ESNext"
+		"target": "ESNext",
+		"types": [
+			"webpack-env",
+			"jest"
+		]
 	},
 	"exclude": [
 		"node_modules"
+	],
+	"include": [
+		"src/client/**/*.ts",
+		"src/client/**/*.tsx",
+		"src/client/**/*.vue",
+		"tests/**/*.ts",
+		"tests/**/*.tsx"
 	]
 }

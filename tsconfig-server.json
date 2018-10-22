@@ -1,15 +1,21 @@
 {
-	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"module": "CommonJS",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+		"removeComments": true,
+		"sourceMap": false,
+		"strict": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"target": "esnext",
+		"module": "commonjs",
 		"outDir": "server",
 		"typeRoots": []
 	},
-	"include": [
-		"src/server/**/*"
-	],
 	"exclude": [
 		"node_modules",
+		"src/client",
 		"**/*.spec.ts"
 	]
 }

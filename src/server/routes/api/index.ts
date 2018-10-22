@@ -37,6 +37,6 @@ export class ApiRoute extends BaseRoute {
 	 * @constructor
 	 */
 	constructor() {
-		super();
+		super( );
 	}
 }
