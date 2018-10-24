@@ -14,7 +14,7 @@
 			"scripthost"
 		],
 		"module": "esnext",
-		"moduleResolution": "Node",
+		"moduleResolution": "node",
 		"noImplicitAny": false,
 		"paths": {
 			"@/*": [
@@ -25,10 +25,10 @@
 		"sourceMap": true,
 		"strict": true,
 		"suppressImplicitAnyIndexErrors": true,
-		"target": "ESNext",
+		"target": "esnext",
 		"types": [
-			"webpack-env",
-			"jest"
+			"jest",
+			"webpack-env"
 		]
 	},
 	"exclude": [
