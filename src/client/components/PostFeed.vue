@@ -1,23 +1,25 @@
 <template lang="html">
-	<div class="posts">
-		<div class="post" v-for="( post, postIndex ) in posts" v-if="hasPosts">
-			<h2 class="post-title" v-html="post.title"></h2>
-			<div class="post-meta">
-				<small class="post-date">
-					<span class="date-label">Published:</span>
-					<time class="date" :datetime="post.createdAt">
-						<span class="date-value date-value__date">{{ postDate( post.createdAt ) }}</span>
-						<span class="date-separator" aria-hidden="true">{{ dateSeparator }}</span>
-						<span class="date-value date-value__time">{{ postTime( post.createdAt ) }}</span>
-					</time>
-				</small>
+	<transition name="fade" mode="out-in">
+		<div class="posts">
+			<div class="post" v-for="( post, postIndex ) in posts" v-if="hasPosts">
+				<h2 class="post-title" v-html="post.title"></h2>
+				<div class="post-meta">
+					<small class="post-date">
+						<span class="date-label">Published:</span>
+						<time class="date" :datetime="post.createdAt">
+							<span class="date-value date-value__date">{{ postDate( post.createdAt ) }}</span>
+							<span class="date-separator" aria-hidden="true">{{ dateSeparator }}</span>
+							<span class="date-value date-value__time">{{ postTime( post.createdAt ) }}</span>
+						</time>
+					</small>
+				</div>
+				<div class="post-body" v-html="post.body"></div>
 			</div>
-			<div class="post-body" v-html="post.body"></div>
+			<div v-else>
+				<p>No posts found.</p>
+			</div>
 		</div>
-		<div v-else>
-			<p>No posts found.</p>
-		</div>
-	</div>
+	</transition>
 </template>
 
 <script lang="ts">
@@ -34,14 +36,6 @@ export default class PostFeed extends Vue {
 		return this.posts instanceof Array && 0 < this.posts.length;
 	}
 
-	private created() {
-		if ( this.hasPosts ) {
-			console.table( 'Generating post feed with:', this.posts );
-		} else {
-			console.debug( 'No posts to show', this.posts );
-		}
-	}
-
 	private postDate( dateString: string ): string {
 		return dateString.substr( 0, 10 );
 	}
@@ -49,14 +43,11 @@ export default class PostFeed extends Vue {
 	private postTime( dateString: string ): string {
 		return dateString.substr( 11, 5 );
 	}
-
 }
 </script>
 
 <style scoped lang="scss">
-h2 {
-	margin: 40px 0 0;
-}
+@import url( '../scss/animations.scss' );
 
 .date-label {
 	display: inline-block;
