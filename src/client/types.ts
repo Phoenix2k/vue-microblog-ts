@@ -1,3 +1,12 @@
+export interface PostState {
+	posts: SinglePost[];
+}
+
+export interface RootState {
+	error: boolean;
+	loading: boolean;
+}
+
 export class SinglePost {
 	public body: string;
 	public createdAt: string;
