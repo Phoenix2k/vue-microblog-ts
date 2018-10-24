@@ -1,19 +1,21 @@
 import PostFeed from '@/client/components/PostFeed.vue';
 import { SinglePost } from '@/client/types';
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, TransitionStub } from '@vue/test-utils';
 
 describe( 'PostFeed.vue', () => {
 
 	const posts: SinglePost[] = [
 		{
-			title: 'Post 1',
 			body: '<p>Some body text</p>',
 			createdAt: '2018-01-01T00:00:00.000Z',
+			id: '1',
+			title: 'Post 1',
 		},
 		{
-			title: 'Post 2',
 			body: '<p>Some body text</p>',
 			createdAt: '2018-12-24T22:00:00.000Z',
+			id: '2',
+			title: 'Post 2',
 		},
 	];
 
@@ -21,6 +23,9 @@ describe( 'PostFeed.vue', () => {
 		propsData: {
 			dateSeparator: '-',
 			posts,
+		},
+		stubs: {
+			transition: TransitionStub,
 		},
 	} );
 
