@@ -1,7 +1,9 @@
+// Prevent copy plugin from failing if `public` folder doesn't exist
+try { require( 'fs' ).mkdirSync( './public' ); } catch ( error ) { };
+
 module.exports = {
 	baseUrl: '/',
 	chainWebpack: config => {
-		// Only available if `public` folder exists
 		config.plugin( 'copy' ).tap( ( [ options ] ) => {
 			options[0].from = 'src/client/public';
 		} );
