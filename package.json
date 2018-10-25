@@ -18,14 +18,14 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
-  "description": "Micro-blogging service based on Express, MongoDB and Vue.js",
+  "description": "Simple news feed written in TypeScript based on Express, MongoDB and Vue.js",
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^3.0.1",
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^4.0.3",
     "@types/express": "^4.16.0",
     "@types/jest": "^23.3.7",
-    "@types/mongoose": "^5.2.19",
+    "@types/mongoose": "^5.2.20",
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-e2e-cypress": "^3.0.5",
     "@vue/cli-plugin-pwa": "^3.0.5",
@@ -47,13 +47,12 @@
   "keywords": [
     "express",
     "mongodb",
-    "ts",
     "typescript",
     "vue"
   ],
   "license": "MIT",
   "main": "server/main.js",
-  "name": "micro-blog-ts",
+  "name": "vue-express-ts",
   "scripts": {
     "dev:client": "vue-cli-service serve",
     "dev:server": "nodemon --project tsconfig-server.json",
@@ -69,7 +68,7 @@
     "lint:server": "tslint --project tsconfig-server.json",
     "start": "node server/index.js",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service  test:unit"
+    "test:unit": "vue-cli-service test:unit"
   },
   "version": "1.0.0"
 }
