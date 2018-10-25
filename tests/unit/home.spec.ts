@@ -1,56 +1,199 @@
 import PostFeed from '@/client/components/PostFeed.vue';
 import Home from '@/client/views/Home.vue';
-import { config, mount } from '@vue/test-utils';
-
-config.logModifiedComponents = false;
+import { shallowMount } from '@vue/test-utils';
+import { Store } from 'vuex-mock-store';
 
 describe( 'Home.vue', () => {
 
-	const wrapper = mount( Home );
-
 	it( 'contains the posts wrapper', () => {
-		wrapper.setData( { error: false, loading: false } );
+		const store = new Store( {
+			getters: {
+				'hasErrors': false,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.contains( PostFeed ) ).toBe( true );
 	} );
 
 	it( 'does not contain the posts wrapper', () => {
-		wrapper.setData( { error: false, loading: true } );
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.contains( PostFeed ) ).toBe( false );
 	} );
 
 	it( 'does not contain the posts wrapper', () => {
-		wrapper.setData( { error: true, loading: false } );
+		const store = new Store( {
+			getters: {
+				'hasError': false,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.contains( PostFeed ) ).toBe( false );
 	} );
 
-	it( 'does not contain the error wrapper', () => {
-		wrapper.setData( { error: true, loading: true } );
-		expect( wrapper.find( '.error' ).exists() ).toBe( false );
-	} );
-
-	it( 'does not contain the error wrapper', () => {
-		wrapper.setData( { error: false, loading: false } );
-		expect( wrapper.find( '.error' ).exists() ).toBe( false );
+	it( 'does not contain the posts wrapper', () => {
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
+		expect( wrapper.contains( PostFeed ) ).toBe( false );
 	} );
 
 	it( 'contains the error wrapper', () => {
-		wrapper.setData( { error: true, loading: false } );
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.find( '.error' ).exists() ).toBe( true );
 	} );
 
+	it( 'does not contain the error wrapper', () => {
+		const store = new Store( {
+			getters: {
+				'hasError': false,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
+		expect( wrapper.find( '.error' ).exists() ).toBe( false );
+	} );
+
+	it( 'does not contain the error wrapper', () => {
+		const store = new Store( {
+			getters: {
+				'hasError': false,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
+		expect( wrapper.find( '.error' ).exists() ).toBe( false );
+	} );
+
+	it( 'does not contain the error wrapper', () => {
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
+		expect( wrapper.find( '.error' ).exists() ).toBe( false );
+	} );
+
 	it( 'contains the loading wrapper', () => {
-		wrapper.setData( { loading: true, error: false } );
+		const store = new Store( {
+			getters: {
+				'hasError': false,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.find( '.loading' ).exists() ).toBe( true );
 	} );
 
 	it( 'does not contain the loading wrapper', () => {
-		wrapper.setData( { error: true, loading: true } );
+		const store = new Store( {
+			getters: {
+				'hasError': false,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.find( '.loading' ).exists() ).toBe( false );
 	} );
 
 	it( 'does not contain the loading wrapper', () => {
-		wrapper.setData( { error: true, loading: false } );
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': false,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.find( '.loading' ).exists() ).toBe( false );
 	} );
 
+	it( 'does not contain the loading wrapper', () => {
+		const store = new Store( {
+			getters: {
+				'hasError': true,
+				'isLoading': true,
+				'PostStore/getPosts': [],
+			},
+			state: {
+				PostStore: {},
+			},
+		} );
+		const mocks = { $store: store };
+		const wrapper = shallowMount( Home, { mocks } );
+		expect( wrapper.find( '.loading' ).exists() ).toBe( false );
+	} );
 } );

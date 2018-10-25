@@ -1,11 +1,11 @@
 <template lang="html">
 	<div class="home">
 		<img alt="Vue logo" src="../assets/logo.png" />
-		<div class="error" v-if="hasError">
+		<div class="error" v-if="hasError && ! isLoading">
 			<p class="error-message">Unable to get posts.</p>
 			<p><button @click="loadPosts" type="button">Try again?</button></p>
 		</div>
-		<div class="loading" v-if="isLoading">
+		<div class="loading" v-if="! hasError && isLoading">
 			<p>Loading posts</p>
 			<img alt="Vue logo" src="../assets/loading.svg" />
 		</div>
