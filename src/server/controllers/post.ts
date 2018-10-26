@@ -12,7 +12,7 @@ export class PostController {
 	public createPost( request: Request, response: Response ) {
 		return new PostsConnection( request.body ).save( ( error, post ) => {
 			if ( error ) return response.send( error );
-			response.json( post );
+			response.sendStatus( 201 );
 		} );
 	}
 
