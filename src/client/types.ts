@@ -1,5 +1,13 @@
-export interface PostState {
+export interface NewsFeedState {
 	posts: SinglePost[];
+}
+
+export interface PostFormState {
+	body: string;
+	error: boolean;
+	loading: boolean;
+	success: boolean;
+	title: string;
 }
 
 export interface RootState {
@@ -7,16 +15,14 @@ export interface RootState {
 	loading: boolean;
 }
 
-export class SinglePost {
-	public body: string;
-	public createdAt: string;
-	public id: string;
-	public title: string;
+export interface SinglePost {
+	body: string;
+	createdAt: string;
+	id: string;
+	title: string;
+}
 
-	constructor( data: any ) {
-		this.id = data._id;
-		this.body = data.body;
-		this.createdAt = data.createdAt;
-		this.title = data.title;
-	}
+export interface SubmitPost {
+	body: string;
+	title: string;
 }

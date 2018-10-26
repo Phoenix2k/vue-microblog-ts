@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex, { ActionTree, GetterTree, MutationTree, StoreOptions } from 'vuex';
 import { RootState } from '../types';
 import { NewsFeedStore } from './modules/NewsFeedStore';
+import { PostFormStore } from './modules/PostFormStore';
 
 Vue.use( Vuex );
 
@@ -44,6 +45,7 @@ const Store: StoreOptions<RootState> = {
 	getters: Getters,
 	modules: {
 		NewsFeedStore,
+		PostFormStore,
 	},
 	mutations: Mutations,
 	state: State,
