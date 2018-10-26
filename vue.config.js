@@ -2,7 +2,7 @@
 try { require( 'fs' ).mkdirSync( './public' ); } catch ( error ) { };
 
 module.exports = {
-	baseUrl: '/',
+	baseUrl: process.env.BASE_URL,
 	chainWebpack: config => {
 		config.plugin( 'copy' ).tap( ( [ options ] ) => {
 			options[0].from = 'src/client/public';
