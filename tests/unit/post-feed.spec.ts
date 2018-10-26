@@ -1,4 +1,4 @@
-import PostFeed from '@/client/components/PostFeed.vue';
+import PostFeed from '@/client/components/NewsFeed.vue';
 import { SinglePost } from '@/client/types';
 import { shallowMount, TransitionStub } from '@vue/test-utils';
 
