@@ -9,7 +9,7 @@
 			<p>Loading posts</p>
 			<img alt="Vue logo" src="../assets/loading.svg" />
 		</div>
-		<post-feed v-if="! hasError && ! isLoading" :posts="getPosts" />
+		<news-feed v-if="! hasError && ! isLoading" :posts="getPosts" />
 	</div>
 </template>
 
@@ -17,12 +17,12 @@
 import { AxiosResponse } from 'axios';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
-import PostFeed from '../components/PostFeed.vue';
+import NewsFeed from '../components/NewsFeed.vue';
 import { SinglePost } from '../types';
 
 @Component( {
 	components: {
-		'post-feed': PostFeed,
+		'news-feed': NewsFeed,
 	},
 } )
 export default class Home extends Vue {
@@ -33,15 +33,20 @@ export default class Home extends Vue {
 	@Getter( 'hasError' ) private hasError;
 	@Getter( 'isLoading' ) private isLoading;
 
-	// Post State
-	@Action( 'fetchPosts', { namespace: 'PostStore' } ) private fetchPosts;
-	@Getter( 'getPosts', { namespace: 'PostStore' } ) private getPosts;
+	// News Feed
+	@Action( 'fetchPosts', { namespace: 'NewsFeedStore' } ) private fetchPosts;
+	@Getter( 'getPosts', { namespace: 'NewsFeedStore' } ) private getPosts;
 
 	private created(): void {
+		console.info( 'News Feed loaded.' );
+
+		// Show loading screen
 		if ( 0 === this.getPosts.length ) {
 			this.loadPosts();
+
+		// Update posts quietly in the background
+		// if we already have them cached in the state
 		} else {
-			// Update posts quietly in the background
 			this.fetchPosts();
 		}
 	}

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { ActionTree, GetterTree, MutationTree, StoreOptions } from 'vuex';
 import { RootState } from '../types';
-import { PostStore } from './modules/PostStore';
+import { NewsFeedStore } from './modules/NewsFeedStore';
 
 Vue.use( Vuex );
 
@@ -15,6 +15,7 @@ export const Actions: ActionTree<{}, RootState> = {
 		commit( 'updateLoading', loadingState );
 	},
 };
+
 export const Getters: GetterTree<RootState, RootState> = {
 	hasError( state ): boolean {
 		return state.error && ! state.loading;
@@ -42,7 +43,7 @@ const Store: StoreOptions<RootState> = {
 	actions: Actions,
 	getters: Getters,
 	modules: {
-		PostStore,
+		NewsFeedStore,
 	},
 	mutations: Mutations,
 	state: State,

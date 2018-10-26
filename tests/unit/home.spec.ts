@@ -1,4 +1,4 @@
-import PostFeed from '@/client/components/PostFeed.vue';
+import NewsFeed from '@/client/components/NewsFeed.vue';
 import Home from '@/client/views/Home.vue';
 import { shallowMount } from '@vue/test-utils';
 import { Store } from 'vuex-mock-store';
@@ -10,15 +10,15 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasErrors': false,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
 		const wrapper = shallowMount( Home, { mocks } );
-		expect( wrapper.contains( PostFeed ) ).toBe( true );
+		expect( wrapper.contains( NewsFeed ) ).toBe( true );
 	} );
 
 	it( 'does not contain the posts wrapper', () => {
@@ -26,15 +26,15 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
 		const wrapper = shallowMount( Home, { mocks } );
-		expect( wrapper.contains( PostFeed ) ).toBe( false );
+		expect( wrapper.contains( NewsFeed ) ).toBe( false );
 	} );
 
 	it( 'does not contain the posts wrapper', () => {
@@ -42,15 +42,15 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': false,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
 		const wrapper = shallowMount( Home, { mocks } );
-		expect( wrapper.contains( PostFeed ) ).toBe( false );
+		expect( wrapper.contains( NewsFeed ) ).toBe( false );
 	} );
 
 	it( 'does not contain the posts wrapper', () => {
@@ -58,15 +58,15 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
 		const wrapper = shallowMount( Home, { mocks } );
-		expect( wrapper.contains( PostFeed ) ).toBe( false );
+		expect( wrapper.contains( NewsFeed ) ).toBe( false );
 	} );
 
 	it( 'contains the error wrapper', () => {
@@ -74,10 +74,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -90,10 +90,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': false,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -106,10 +106,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': false,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -122,10 +122,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -138,10 +138,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': false,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -154,10 +154,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': false,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -170,10 +170,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': false,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
@@ -186,10 +186,10 @@ describe( 'Home.vue', () => {
 			getters: {
 				'hasError': true,
 				'isLoading': true,
-				'PostStore/getPosts': [],
+				'NewsFeedStore/getPosts': [],
 			},
 			state: {
-				PostStore: {},
+				NewsFeed: {},
 			},
 		} );
 		const mocks = { $store: store };
