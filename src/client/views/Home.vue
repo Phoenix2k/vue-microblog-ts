@@ -1,6 +1,7 @@
 <template lang="html">
 	<div class="home">
 		<img alt="Vue logo" src="../assets/logo.png" />
+		<h1>News Feed</h1>
 		<div class="error" v-if="hasError && ! isLoading">
 			<p class="error-message">Unable to get posts.</p>
 			<p><button @click="loadPosts" type="button">Try again?</button></p>

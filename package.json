@@ -73,7 +73,7 @@
     "lint:fix:server": "tslint --fix --project tsconfig-server.json",
     "lint:server": "tslint --project tsconfig-server.json",
     "start": "node server/index.js",
-    "test": "npm run test:unit",
+    "test": "npm run test:e2e && npm run test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
