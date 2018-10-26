@@ -1,12 +1,21 @@
-export interface NewsFeedState {
+export enum AjaxState {
+	ERROR,
+	IDLE,
+	LOADING,
+	SENDING,
+	SUCCESS,
+}
+
+export interface AjaxStatus {
+	ajaxStatus: AjaxState;
+}
+
+export interface NewsFeedState extends AjaxStatus {
 	posts: SinglePost[];
 }
 
-export interface PostFormState {
+export interface PostFormState extends AjaxStatus {
 	body: string;
-	error: boolean;
-	loading: boolean;
-	success: boolean;
 	title: string;
 }
 

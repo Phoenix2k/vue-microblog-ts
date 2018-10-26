@@ -1,4 +1,4 @@
-import { SinglePost } from '../types';
+import { AjaxState, SinglePost } from '../types';
 
 export default class PostConstructor implements SinglePost {
 	public body: string;
@@ -7,9 +7,9 @@ export default class PostConstructor implements SinglePost {
 	public title: string;
 
 	constructor( data: any ) {
-		this.id = data._id;
-		this.body = data.body;
-		this.createdAt = data.createdAt;
-		this.title = data.title;
+		this.id = data._id ? data._id : '';
+		this.body = data.body ? data.body : '';
+		this.createdAt = data.createdAt ? data.createdAt : '';
+		this.title = data.title ? data.title : '';
 	}
 }

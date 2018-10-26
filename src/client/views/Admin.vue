@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import PostForm from '../components/PostForm.vue';
 
 @Component( {
@@ -16,7 +16,7 @@ import PostForm from '../components/PostForm.vue';
 } )
 export default class Admin extends Vue {
 	private created() {
-		console.info( 'Admin loaded.' );
+		console.info( 'Admin loaded' );
 	}
 }
 </script>

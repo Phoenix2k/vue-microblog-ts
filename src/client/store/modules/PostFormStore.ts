@@ -1,28 +1,21 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import SubmitPostConstructor from '../../constructors/SubmitPostConstructor';
-import { PostFormState, RootState } from '../../types';
+import { AjaxStateToString } from '../../helpers';
+import { AjaxState, PostFormState, RootState } from '../../types';
 
 axios.defaults.baseURL = process.env.BASE_URL;
 const API_URL: string = '/api';
 const Namespaced: boolean = true;
 
 export const Actions: ActionTree<PostFormState, RootState> = {
+	setAjaxState( { commit }, payload: AjaxState ): void {
+		console.debug( 'Setting ajax state to:', AjaxStateToString( payload ) );
+		commit( 'updateAjaxState', payload );
+	},
 	setBody( { commit }, payload: string ): void {
 		console.debug( 'Saving body:', payload );
 		commit( 'updateBody', payload );
-	},
-	setError( { commit }, payload: boolean ): void {
-		console.debug( 'Setting error state to:', payload );
-		commit( 'updateError', payload );
-	},
-	setLoading( { commit }, payload: boolean ): void {
-		console.debug( 'Setting loading state to:', payload );
-		commit( 'updateLoading', payload );
-	},
-	setSuccess( { commit }, payload: boolean ): void {
-		console.debug( 'Setting success state to:', payload );
-		commit( 'updateSuccess', payload );
 	},
 	setTitle( { commit }, payload: string ): void {
 		console.debug( 'Saving title:', payload );
@@ -34,15 +27,11 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 			body: state.body,
 			title: state.title,
 		} );
-		console.debug( 'Sending new post:', formContent );
+		console.debug( 'Saving new post:', formContent );
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
 			axios.post( API_URL, formContent ).then( response => {
-				commit( 'updateLoading', false );
 				resolve( response );
 			} ).catch( error => {
-				console.error( 'Something went wrong while trying to save new post:', error );
-				commit( 'updateError', true );
-				commit( 'updateLoading', false );
 				reject( error );
 			} );
 		} );
@@ -50,21 +39,13 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 };
 
 export const Getters: GetterTree<PostFormState, RootState> = {
+	getAjaxState( state ): AjaxState {
+		console.debug( 'Getting ajax state:', AjaxStateToString( state.ajaxStatus ) );
+		return state.ajaxStatus;
+	},
 	getBody( state ): string {
 		console.debug( 'Getting body:', state.body );
 		return state.body;
-	},
-	getError( state ): boolean {
-		console.debug( 'Getting error state:', state.error );
-		return state.error;
-	},
-	getLoading( state ): boolean {
-		console.debug( 'Getting loading state:', state.loading );
-		return state.loading;
-	},
-	getSuccess( state ): boolean {
-		console.debug( 'Getting success state:', state.success );
-		return state.success;
 	},
 	getTitle( state ): string {
 		console.debug( 'Getting title:', state.title );
@@ -73,21 +54,13 @@ export const Getters: GetterTree<PostFormState, RootState> = {
 };
 
 export const Mutations: MutationTree<PostFormState> = {
+	updateAjaxState( state, payload: AjaxState ): void {
+		console.debug( 'Updating ajax state:', AjaxStateToString( payload ) );
+		state.ajaxStatus = payload;
+	},
 	updateBody( state, payload: string ): void {
 		console.debug( 'Updating body:', payload );
 		state.body = payload;
-	},
-	updateError( state, payload: boolean ): void {
-		console.debug( 'Updating error state:', payload );
-		state.error = payload;
-	},
-	updateLoading( state, payload: boolean ): void {
-		console.debug( 'Updating loading state:', payload );
-		state.loading = payload;
-	},
-	updateSuccess( state, payload: boolean ): void {
-		console.debug( 'Updating success state:', payload );
-		state.success = payload;
 	},
 	updateTitle( state, payload: string ): void {
 		console.debug( 'Updating title:', payload );
@@ -96,10 +69,8 @@ export const Mutations: MutationTree<PostFormState> = {
 };
 
 export const State: PostFormState = {
+	ajaxStatus: AjaxState.IDLE,
 	body: '',
-	error: false,
-	loading: false,
-	success: false,
 	title: '',
 };
 

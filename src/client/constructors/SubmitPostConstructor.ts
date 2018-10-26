@@ -5,7 +5,6 @@ export default class SubmitPostConstructor implements SubmitPost {
 	public title: string;
 
 	constructor( data: any ) {
-		console.warn( data );
 		this.body = data.body;
 		this.title = data.title;
 	}

@@ -14,7 +14,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 @Component( { } )
 export default class App extends Vue {
 	private created() {
-		console.info( 'Application started ✅' );
+		console.info( 'Application started' );
 	}
 }
 </script>

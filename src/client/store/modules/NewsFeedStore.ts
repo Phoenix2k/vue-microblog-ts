@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
-import PostConstructor from '../../constructors/PostConstructor';
-import { NewsFeedState, RootState, SinglePost } from '../../types';
+import { AjaxStateToString } from '../../helpers';
+import { AjaxState, NewsFeedState, RootState, SinglePost } from '../../types';
 
 const API_URL: string = '/api';
 const Namespaced: boolean = true;
@@ -10,23 +10,30 @@ export const Actions: ActionTree<NewsFeedState, RootState> = {
 	async fetchPosts( { commit } ): Promise<AxiosResponse> {
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
 			axios.get( API_URL ).then( response => {
-				const { data } = response;
-				// Convert JSON objects to SinglePosts
-				const Posts: SinglePost[] = data.map( post => {
-					return new PostConstructor( post );
-				} );
-				console.debug( 'Received posts ✅', Posts );
-				commit( 'setPosts', Posts );
+				commit( 'updateAjaxState', AjaxState.SUCCESS );
 				resolve( response );
 			} ).catch( error => {
-				console.error( 'Something went wrong while fetching posts:', error );
+				commit( 'updateAjaxState', AjaxState.ERROR );
 				reject( error );
 			} );
 		} );
 	},
+	setAjaxState( { commit }, payload: AjaxState ): void {
+		console.debug( 'Setting ajax state to:', AjaxStateToString( payload ) );
+		commit( 'updateAjaxState', payload );
+	},
+	setPosts( { commit }, payload: SinglePost[] ): void {
+		console.debug( 'Saving posts:', payload );
+		commit( 'updatePosts', payload );
+		commit( 'updateAjaxState', AjaxState.IDLE );
+	},
 };
 
 export const Getters: GetterTree<NewsFeedState, RootState> = {
+	getAjaxState( state ): AjaxState {
+		console.debug( 'Getting ajax state:', AjaxStateToString( state.ajaxStatus ) );
+		return state.ajaxStatus;
+	},
 	getPosts( state ): SinglePost[] {
 		console.debug( 'Getting posts:', state.posts );
 		return state.posts;
@@ -34,13 +41,18 @@ export const Getters: GetterTree<NewsFeedState, RootState> = {
 };
 
 export const Mutations: MutationTree<NewsFeedState> = {
-	setPosts( state, payload: SinglePost[] ): void {
+	updateAjaxState( state, payload: AjaxState ): void {
+		console.debug( 'Updating ajax state:', AjaxStateToString( payload ) );
+		state.ajaxStatus = payload;
+	},
+	updatePosts( state, payload: SinglePost[] ): void {
 		console.debug( 'Updating posts:', payload );
 		state.posts = payload;
 	},
 };
 
 export const State: NewsFeedState = {
+	ajaxStatus: AjaxState.IDLE,
 	posts: [],
 };
 

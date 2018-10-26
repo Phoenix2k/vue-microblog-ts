@@ -1,26 +1,17 @@
 <template lang="html">
 	<div class="post-wrapper">
-		<div id="aria-error" class="error notice" v-if="error">
-			<p>Unable to save the post. Try again?</p>
-		</div>
-		<div id="aria-success" class="success notice" v-if="success">
-			<p>Post saved sucecssfully.</p>
-		</div>
-		<transition name="fade" mode="in">
-			<form name="post-form" @submit.prevent="submitForm">
-				<p>
-					<label id="aria-input-title" for="title">Title</label>
-					<input aria-describedby="aria-input-title" autocomplete="off" id="title" name="title" required type="text" v-model.trim="title" />
-				</p>
-				<p>
-					<label id="aria-textarea-body" for="body">Body</label>
-					<textarea aria-describedby="aria-textarea-body" autocomplete="off" id="body" name="body" required v-model.trim="body"></textarea>
-				</p>
-				<p><button :aria-describedby="ariaSubmitStatus" id="aria-submit" type="submit" :disabled="notEnoughContent || isLoading">Save</button></p>
-				<p><button type="reset" @click="resetForm" v-if="! isLoading">Start over</button></p>
-				<p><small id="aria-saving" v-if="isLoading">Saving...</small></p>
-			</form>
-		</transition>
+		<form name="post-form" @submit.prevent="submitForm">
+			<h2 class="form-title">Write a post</h2>
+			<p><label id="aria-input-title" for="title">Title</label></p>
+			<p></p><input aria-describedby="aria-input-title" autocomplete="off" id="title" name="title" required type="text" v-model.trim="title" /></p>
+			<p><label id="aria-textarea-body" for="body">Body</label></p>
+			<p><textarea aria-describedby="aria-textarea-body" autocomplete="off" id="body" name="body" required v-model.trim="body"></textarea></p>
+			<p><button :aria-describedby="ajaxStatusId" id="aria-submit" type="submit" :disabled="disableSubmit">Save</button></p>
+			<transition name="pulse" mode="out-in">
+				<p v-if="showStartOver"><button type="reset" @click="resetForm">Start over</button></p>
+				<p id="aria-submit-status" class="notice" :class="ajaxStatusClasses" :key="getAjaxState" v-if="ajaxStatusText">{{ ajaxStatusText }}</p>
+			</transition>
+		</form>
 	</div>
 </template>
 
@@ -28,103 +19,120 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
 import SubmitPostConstructor from '../constructors/SubmitPostConstructor';
+import { AjaxState } from '../types';
 
 @Component( { } )
 export default class PostForm extends Vue {
 
-	@Action( 'setBody', { namespace: 'PostFormStore' } ) private setBody;
-	@Action( 'setError', { namespace: 'PostFormStore' } ) private setError;
-	@Action( 'setLoading', { namespace: 'PostFormStore' } ) private setLoading;
-	@Action( 'setSuccess', { namespace: 'PostFormStore' } ) private setSuccess;
-	@Action( 'setTitle', { namespace: 'PostFormStore' } ) private setTitle;
-	@Action( 'submitPost', { namespace: 'PostFormStore' } ) private submitPost;
+	@Action( 'setAjaxState', { namespace: 'PostFormStore' } ) private setAjaxState;
+	@Action( 'setBody',      { namespace: 'PostFormStore' } ) private setBody;
+	@Action( 'setTitle',     { namespace: 'PostFormStore' } ) private setTitle;
+	@Action( 'submitPost',   { namespace: 'PostFormStore' } ) private submitPost;
 
-	@Getter( 'getBody', { namespace: 'PostFormStore' } ) private stateBody;
-	@Getter( 'getError', { namespace: 'PostFormStore' } ) private error;
-	@Getter( 'getLoading', { namespace: 'PostFormStore' } ) private isLoading;
-	@Getter( 'getSuccess', { namespace: 'PostFormStore' } ) private success;
-	@Getter( 'getTitle', { namespace: 'PostFormStore' } ) private stateTitle;
+	@Getter( 'getAjaxState', { namespace: 'PostFormStore' } ) private getAjaxState;
+	@Getter( 'getBody',      { namespace: 'PostFormStore' } ) private stateBody;
+	@Getter( 'getTitle',     { namespace: 'PostFormStore' } ) private stateTitle;
 
 	private body: string = '';
 	private title: string = '';
 
 	private beforeDestroy() {
-		this.resetStatus();
+		console.log( 'Preparing to destroy post form...' );
+		this.setAjaxState( AjaxState.IDLE );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
 
 	private created() {
+		console.log( 'Post form created' );
 		this.restoreValuesFromStore();
 	}
 
 	private resetForm() {
+		console.log( 'Resetting post form...' );
 		this.body = '';
 		this.title = '';
-		this.resetStatus();
 		this.setBody( '' );
 		this.setTitle( '' );
-		document.getElementById( 'title' )!.focus();
-	}
 
-	private resetStatus() {
-		this.setError( false );
-		this.setLoading( false );
-		this.setSuccess( false );
+		// Add sligh delay for other animations to complete
+		this.setAjaxState( AjaxState.IDLE );
+		document.getElementById( 'title' )!.focus();
 	}
 
 	private async submitForm() {
 		console.info( 'Saving posts...' );
 		this.saveValuesToStore();
+		this.setAjaxState( AjaxState.SENDING );
 		this.submitPost().then( response => {
 			if ( 201 === response.status ) {
 				console.debug( 'Post saved ✅', response );
-				this.setSuccess( true );
-				setTimeout( () => {
-					this.resetForm();
-				}, 2000 );
+				this.setAjaxState( AjaxState.SUCCESS );
+				setTimeout( () => { this.resetForm(); }, 2500 );
 				return response;
 			}
-			console.warn( 'Received an unexpected response', response );
-			this.setError( true );
+			console.warn( 'Received an unexpected response while saving new post', response );
+			this.setAjaxState( AjaxState.ERROR );
 		} ).catch( error => {
-			this.setError( true );
-			console.error( error );
+			this.setAjaxState( AjaxState.ERROR );
+			console.error( 'Something went wrong while saving new post:', error );
 		} );
 	}
 
 	private restoreValuesFromStore() {
+		console.log( 'Restoring previous values from store...' );
 		this.body = this.stateBody;
 		this.title = this.stateTitle;
 	}
 
 	private saveValuesToStore() {
+		console.log( 'Saving values to store...' );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
 
-	get ariaSubmitStatus(): string {
-		let ariaElementIdName = '';
-		if ( this.error ) ariaElementIdName = 'aria-error';
-		else if ( this.isLoading ) ariaElementIdName = 'aria-loading';
-		else if ( this.success ) ariaElementIdName = 'aria-success';
-		return ariaElementIdName;
-	}
-
-	get notEnoughContent(): boolean {
-		return 0 === this.title.length || 0 === this.body.length;
-	}
-
-	// Refocus on submit button if something went wrong
-	@Watch( 'getError', { immediate: false, deep: false } )
-	private onPostsChanged( error: boolean ): void {
-		if ( error ) {
-			const $submit = document.getElementById( 'aria-submit' )!;
-			if ( document.activeElement === $submit ) {
-				$submit.blur();
-				this.$nextTick( () => $submit.focus() );
-			}
+	get ajaxStatusClasses(): string {
+		let classes = '';
+		switch ( this.getAjaxState ) {
+			case AjaxState.ERROR: classes = 'error'; break;
+			case AjaxState.LOADING: classes = 'loading'; break;
+			case AjaxState.SUCCESS: classes = 'success'; break;
 		}
+		console.log( 'Changing ajax status class(es) to:', classes );
+		return classes;
+	}
+
+	get ajaxStatusText(): string {
+		let statusText = '';
+		switch ( this.getAjaxState ) {
+			case AjaxState.ERROR:
+				statusText = 'Unable to save post. Try again?';
+				break;
+			case AjaxState.SENDING:
+				statusText = 'Saving post...';
+				break;
+			case AjaxState.SUCCESS:
+				statusText = 'Post saved!';
+				break;
+		}
+		if ( statusText ) console.log( 'Setting ajax status text to:', statusText );
+		return statusText;
+	}
+
+	get ajaxStatusId(): string {
+		return this.ajaxStatusText ? 'aria-submit-status' : '';
+	}
+
+	get disableSubmit(): boolean {
+		const isDisabled = 0 < this.ajaxStatusText.length || 0 === this.body.length || 0 === this.title.length;
+		// console.log( isDisabled ? 'Disabling send button' : 'Enabling send button' );
+		return isDisabled;
+	}
+
+	get showStartOver(): boolean {
+		const isVisible = this.getAjaxState === AjaxState.IDLE && ( 0 < this.body.length || 0 < this.title.length );
+		// console.log( isVisible ? 'Showing reset button' : 'Hiding reset button' );
+		return isVisible;
 	}
 }
 </script>
@@ -132,12 +140,13 @@ export default class PostForm extends Vue {
 <style scoped lang="scss">
 @import url( '../scss/animations.scss' );
 
+$border-color: #ccc;
 $error-background: #e53237;
 $error-color: #fff;
+$reset-color: #ccc;
 $submit-button-background: #47b784;
 $submit-button-color: #fff;
-$success-background: #47b784;
-$success-color: #fff;
+$success-color: #47b784;
 $text-input-background: WhiteSmoke;
 $text-input-color: #333;
 
@@ -154,10 +163,10 @@ button {
 	border: 0;
 }
 
-button[type="reset"] {
+button[type=reset] {
 	background: transparent;
 	border: 0;
-	color: #bbb;
+	color: $reset-color;
 	font-size: 0.9em;
 	margin: 0.25em auto;
 	transition: color 0.3s ease-out;
@@ -167,7 +176,7 @@ button[type="reset"] {
 	}
 }
 
-button[type="submit"] {
+button[type=submit] {
 	background: $submit-button-background;
 	color: $submit-button-color;
 	font-size: 1.6em;
@@ -183,7 +192,7 @@ button[type="submit"] {
 	}
 
 	&:focus {
-		animation: animateButton 1.25s ease-in-out 0s infinite alternate both;
+		animation: animateButton 1.15s ease-in-out 0s infinite alternate both;
 	}
 
 	&:hover {
@@ -192,13 +201,13 @@ button[type="submit"] {
 	}
 }
 
-button[type="submit"],
-input[type="text"],
+button[type=submit],
+input[type=text],
 textarea {
 	padding: 1rem;
 }
 
-button[type="submit"],
+button[type=submit],
 label {
 	letter-spacing: 0.15ch;
 }
@@ -209,10 +218,10 @@ label {
 	text-transform: uppercase;
 }
 
-input[type="text"],
+input[type=text],
 textarea {
 	background: $text-input-background;
-	border: 1px solid #ddd;
+	border: 1px solid $border-color;
 	color: $text-input-color;
 	font-size: 1.2em;
 	padding: 1rem;
@@ -230,9 +239,14 @@ textarea {
 	color: $error-color;
 }
 
+.form-title {
+	border-bottom: 1px solid $border-color;
+	margin: 0.5em;
+	padding: 1em;
+}
+
 .notice {
 	font-size: 0.9em;
-	padding: 0.5em;
 }
 
 .post-wrapper {
@@ -241,7 +255,6 @@ textarea {
 }
 
 .success {
-	background: $success-background;
 	color: $success-color;
 }
 </style>
