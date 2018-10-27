@@ -21,11 +21,11 @@ export class PostController {
 	 */
 	public deletePost( request: Request, response: Response ) {
 		return PostsConnection.findOneAndDelete( {
-			_id: request.query.postId,
+			_id: request.body.postId,
 		}, ( error, post ) => {
 			if ( error ) return response.send( error );
-			if ( ! post ) return response.sendStatus( 204 );
-			response.sendStatus( 202 );
+			if ( ! post ) return response.status( 404 ).send( post );
+			response.sendStatus( 204 );
 		} );
 	}
 
