@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
 	<div class="admin">
 		<h1>Admin</h1>
 		<post-form />
@@ -20,7 +20,3 @@ export default class Admin extends Vue {
 	}
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

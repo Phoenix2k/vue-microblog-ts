@@ -1,0 +1,58 @@
+.notification-template {
+	align-items: center;
+	background: #fff;
+	border: 1px solid #eee;
+	border-left: 0.3em solid #eee;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding: 0.5em;
+	line-height: 1.2;
+	justify-content: center;
+	margin: 0.5em;
+	text-align: left;
+
+	.ajax-error & {
+		border-left-color: #b62f2a;
+
+		.notification-icon {
+			color: #b62f2a;
+		}
+	}
+
+	.ajax-success & {
+		border-left-color: #47b784;
+
+		.notification-icon {
+			color: #47b784;
+		}
+	}
+}
+
+.notification-close {
+	color: #000;
+	cursor: pointer;
+	padding: 0.5em;
+	opacity: 0.3;
+	transition: opacity 0.2s linear;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.notification-content {
+	flex: 1;
+}
+
+.notification-icon {
+	font-size: 2em;
+	padding: 0 0.5em 0 0.2em;
+}
+
+.notification-title {
+	font-weight: bold;
+	font-size: 0.7em;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}

@@ -12,22 +12,33 @@
 	transition: opacity .5s;
 }
 
-.pulse-leave-active {
-	opacity: 0;
-
+.v-fade-bottom-enter-active,
+.v-fade-bottom-leave-active,
+.v-fade-bottom-move {
+	transition: all 1s;
 }
-.pulse-enter {
+.v-fade-bottom-enter,
+.v-fade-bottom-leave-to {
+	opacity: 0;
+	transform: translateY( 200px );
+}
+
+.zoom-leave-active {
+	opacity: 0;
+}
+
+.zoom-enter {
 	animation-delay: 0.3s;
 	opacity: 1;
 	transition: all 0.4s;
 }
 
-.pulse-enter-active,
-.pulse-leave-active {
+.zoom-enter-active,
+.zoom-leave-active {
 	transition: all 0.4s;
 }
 
-.pulse-enter {
+.zoom-enter {
 	opacity: 0;
 	transform: scale( 0 );
 }

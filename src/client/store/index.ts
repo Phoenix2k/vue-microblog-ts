@@ -7,37 +7,26 @@ import { PostFormStore } from './modules/PostFormStore';
 Vue.use( Vuex );
 
 export const Actions: ActionTree<{}, RootState> = {
-	setError( { commit }, errorState: boolean ): void {
-		console.log( 'Setting error state to:' , errorState );
-		commit( 'updateError', errorState );
-	},
-	setLoading( { commit }, loadingState: boolean ): void {
-		console.log( 'Setting loading state to:' , loadingState );
-		commit( 'updateLoading', loadingState );
+	setNotificationDuration( { commit }, payload: number ): void {
+		console.log( 'Setting notification duration to:' , payload );
+		commit( 'updateLoading', payload );
 	},
 };
 
 export const Getters: GetterTree<RootState, RootState> = {
-	hasError( state ): boolean {
-		return state.error && ! state.loading;
-	},
-	isLoading( state ): boolean {
-		return ! state.error && state.loading;
+	getNotificationDuration( state ): number {
+		return state.notificationDuration;
 	},
 };
 
 export const Mutations: MutationTree<RootState> = {
-	updateError( state, payload: boolean ) {
-		state.error = payload;
-	},
-	updateLoading( state, payload: boolean ) {
-		state.loading = payload;
+	setNotificationDuration( state, payload: number ) {
+		state.notificationDuration = payload;
 	},
 };
 
 export const State: RootState = {
-	error: false,
-	loading: true,
+	notificationDuration: 2000,
 };
 
 const Store: StoreOptions<RootState> = {

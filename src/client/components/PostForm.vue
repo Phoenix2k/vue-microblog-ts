@@ -2,14 +2,13 @@
 	<div class="post-wrapper">
 		<form name="post-form" @submit.prevent="submitForm">
 			<h2 class="form-title">Write a post</h2>
-			<p><label id="aria-input-title" for="title">Title</label></p>
-			<p></p><input aria-describedby="aria-input-title" autocomplete="off" id="title" name="title" required type="text" v-model.trim="title" /></p>
-			<p><label id="aria-textarea-body" for="body">Body</label></p>
-			<p><textarea aria-describedby="aria-textarea-body" autocomplete="off" id="body" name="body" required v-model.trim="body"></textarea></p>
-			<p><button :aria-describedby="ajaxStatusId" id="aria-submit" type="submit" :disabled="disableSubmit">Save</button></p>
-			<transition name="pulse" mode="out-in">
+			<p><label id="input-title" for="title">Title</label></p>
+			<p></p><input aria-describedby="input-title" autocomplete="off" id="title" name="title" required type="text" v-model.trim="title" /></p>
+			<p><label id="textarea-body" for="body">Body</label></p>
+			<p><textarea aria-describedby="textarea-body" autocomplete="off" id="body" name="body" required v-model.trim="body"></textarea></p>
+			<p><button id="submit-post" type="submit" :disabled="disableSubmit">Save</button></p>
+			<transition name="zoom" mode="out-in">
 				<p v-if="showStartOver"><button type="reset" @click="resetForm">Start over</button></p>
-				<p id="aria-submit-status" class="notice" :class="ajaxStatusClasses" :key="getAjaxStatus" v-if="getAjaxMessage">{{ getAjaxMessage }}</p>
 			</transition>
 		</form>
 	</div>
@@ -21,7 +20,7 @@ import { Action, Getter, namespace } from 'vuex-class';
 import SubmitPostConstructor from '../constructors/SubmitPostConstructor';
 import { AjaxState, UIState } from '../types';
 
-@Component( { } )
+@Component
 export default class PostForm extends Vue {
 
 	@Action( 'setAjaxMessage', { namespace: 'PostFormStore' } ) private setAjaxMessage;
@@ -29,6 +28,8 @@ export default class PostForm extends Vue {
 	@Action( 'setBody',        { namespace: 'PostFormStore' } ) private setBody;
 	@Action( 'setTitle',       { namespace: 'PostFormStore' } ) private setTitle;
 	@Action( 'submitPost',     { namespace: 'PostFormStore' } ) private submitPost;
+
+	@Getter( 'getNotificationDuration' ) private notificationDuration;
 
 	@Getter( 'getAjaxMessage', { namespace: 'PostFormStore' } ) private getAjaxMessage;
 	@Getter( 'getAjaxStatus',  { namespace: 'PostFormStore' } ) private getAjaxStatus;
@@ -49,6 +50,10 @@ export default class PostForm extends Vue {
 	private created() {
 		console.log( 'Post form created' );
 		this.restoreValuesFromStore();
+	}
+
+	private mounted() {
+		document.getElementById( 'input-title' )!.focus();
 	}
 
 	private resetForm() {
@@ -89,21 +94,6 @@ export default class PostForm extends Vue {
 		this.setTitle( this.title );
 	}
 
-	get ajaxStatusClasses(): string {
-		let classes = '';
-		switch ( this.getAjaxStatus ) {
-			case AjaxState.ERROR: classes = 'error'; break;
-			case AjaxState.SENDING: classes = 'loading'; break;
-			case AjaxState.SUCCESS: classes = 'success'; break;
-		}
-		console.log( 'Changing ajax status class(es) to:', classes );
-		return classes;
-	}
-
-	get ajaxStatusId(): string {
-		return 0 < this.getAjaxMessage.length ? 'aria-submit-status' : '';
-	}
-
 	get disableSubmit(): boolean {
 		const isDisabled = 0 < this.getAjaxMessage.length || 0 === this.body.length || 0 === this.title.length;
 		// console.log( isDisabled ? 'Disabling send button' : 'Enabling send button' );
@@ -122,24 +112,31 @@ export default class PostForm extends Vue {
 			case AjaxState.ERROR:
 				console.log( 'Showing error message...' );
 				this.uiState = UIState.ERROR;
+				this.$notify( {
+					group: 'ajax-error',
+					title: 'Error',
+					text : this.getAjaxMessage,
+				} );
 				setTimeout( () => {
-					setTimeout( () => {
-						this.setAjaxStatus( AjaxState.IDLE );
-						this.setAjaxMessage( '' );
-						this.uiState = UIState.READY;
-					}, 1500 );
-				}, 500 );
+					this.setAjaxStatus( AjaxState.IDLE );
+					this.setAjaxMessage( '' );
+					this.uiState = UIState.READY;
+					this.$nextTick( () => document.getElementById( 'submit-post' )!.focus() );
+				}, this.notificationDuration );
 				break;
 			case AjaxState.SENDING:
-				console.log( 'Showing sending message...' );
 				this.uiState = UIState.LOADING;
 				break;
 			case AjaxState.SUCCESS:
-				console.log( 'Showing success message...' );
+				this.$notify( {
+					group: 'ajax-success',
+					title: 'Success',
+					text : this.getAjaxMessage,
+				} );
 				this.uiState = UIState.READY;
 				setTimeout( () => {
 					this.resetForm();
-				}, 2500 );
+				}, this.notificationDuration );
 				break;
 		}
 	}
@@ -147,8 +144,6 @@ export default class PostForm extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import url( '../scss/animations.scss' );
-
 $border-color: #ccc;
 $error-color: #e53237;
 $reset-color: #ccc;
@@ -210,14 +205,14 @@ button[type=submit] {
 }
 
 button[type=submit],
-input[type=text],
-textarea {
-	padding: 1rem;
+label {
+	letter-spacing: 0.15ch;
 }
 
 button[type=submit],
-label {
-	letter-spacing: 0.15ch;
+input[type=text],
+textarea {
+	padding: 1rem;
 }
 
 label {

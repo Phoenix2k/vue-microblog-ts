@@ -39,7 +39,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
 import { AjaxState, SinglePost, UIState } from '../types';
 
-@Component( { } )
+@Component
 export default class NewsFeed extends Vue {
 
 	@Action( 'deletePost',     { namespace: 'NewsFeedStore' } ) private deletePost;
@@ -59,10 +59,10 @@ export default class NewsFeed extends Vue {
 
 		// Show loading screen
 		if ( 0 === this.getPosts.length ) {
+			this.uiState = UIState.LOADING;
 			this.loadPosts();
 
 		// Update posts quietly in the background
-		// if theya re already in the state
 		} else {
 			this.fetchPosts();
 		}
@@ -72,6 +72,23 @@ export default class NewsFeed extends Vue {
 		console.info( 'Attempting to delete post:', postId );
 		try {
 			const response = await this.deletePost( postId );
+			switch ( response.status ) {
+				case 204:
+					this.$notify( {
+						group: 'post-deleted',
+						title: 'Success',
+						text : 'Post successfully deleted.',
+					} );
+					break;
+				case 404:
+					this.$notify( {
+						group: 'ajax-error',
+						title: 'Error',
+						text : 'Post not found.',
+					} );
+					break;
+			}
+			// Refresh feed
 			this.fetchPosts();
 			return response;
 		} catch ( error ) {
@@ -79,6 +96,7 @@ export default class NewsFeed extends Vue {
 			return error;
 		}
 	}
+
 	private async loadPosts(): Promise<AxiosResponse> {
 		console.info( 'Loading posts...' );
 		this.uiState = UIState.LOADING;
@@ -124,12 +142,6 @@ export default class NewsFeed extends Vue {
 					this.uiState = UIState.ERROR;
 				}, 500 );
 				break;
-			case AjaxState.LOADING:
-				console.log( 'Showing loading screen...' );
-				setTimeout( () => {
-					this.uiState = UIState.LOADING;
-				}, 500 );
-				break;
 			default:
 				console.log( 'Showing posts...' );
 				setTimeout( () => {
@@ -151,8 +163,6 @@ export default class NewsFeed extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import url( '../scss/animations.scss' );
-
 .date-label {
 	display: inline-block;
 	margin-right: 0.25em;

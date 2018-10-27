@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
 	<div id="app">
 		<vue-progress-bar></vue-progress-bar>
 		<div class="nav">
@@ -6,22 +6,34 @@
 			<router-link to="/admin">Admin</router-link>
 		</div>
 		<router-view/>
+		<ajax-notifications :duration="notificationDuration" />
 		<icons />
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
+import AjaxNotifications from './components/AjaxNotifications.vue';
+import Icons from './components/Icons.vue';
 import './scss/animations.scss';
 import './scss/base.scss';
+import './scss/notifications.scss';
 
-@Component( { } )
+@Component( {
+	components: {
+		'ajax-notifications': AjaxNotifications,
+		'icons': Icons,
+	},
+} )
 export default class App extends Vue {
+	@Getter( 'getNotificationDuration' ) private notificationDuration;
 	private created() {
 		console.info( 'Application started' );
 	}
 }
 </script>
+
 <style scoped lang="scss">
 #app {
 	text-align: center;

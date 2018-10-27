@@ -21,8 +21,7 @@ export interface PostFormState extends AjaxCalls {
 }
 
 export interface RootState {
-	error: boolean;
-	loading: boolean;
+	notificationDuration: number;
 }
 
 export interface SinglePost {
