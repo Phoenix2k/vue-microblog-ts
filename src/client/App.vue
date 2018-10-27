@@ -11,6 +11,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import './scss/animations.scss';
+import './scss/base.scss';
 
 @Component( { } )
 export default class App extends Vue {
@@ -20,8 +22,6 @@ export default class App extends Vue {
 }
 </script>
 <style scoped lang="scss">
-@import url( './scss/base.scss' );
-
 #app {
 	text-align: center;
 }
