@@ -20,13 +20,14 @@
 								<span class="date-separator" aria-hidden="true">@</span>
 								<span class="date-value date-value__time">{{ postTime( post.createdAt ) }}</span>
 							</time>
+							<a class="delete-post" href="#" @click="deleteSinglePost( post.id )">Delete</a>
 						</small>
 					</div>
 					<div class="post-body" v-html="post.body"></div>
 				</article>
 			</div>
-			<div v-else>
-				<p>No posts found.</p>
+			<div v-if="! showPosts">
+				<p>No posts found. Create the <router-link to="admin">first one</router-link>?</p>
 			</div>
 		</div>
 	</transition>
@@ -36,12 +37,12 @@
 import { AxiosResponse } from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
-import PostConstructor from '../constructors/PostConstructor';
 import { AjaxState, SinglePost } from '../types';
 
 @Component( { } )
 export default class NewsFeed extends Vue {
 
+	@Action( 'deletePost',   { namespace: 'NewsFeedStore' } ) private deletePost;
 	@Action( 'fetchPosts',   { namespace: 'NewsFeedStore' } ) private fetchPosts;
 	@Action( 'setAjaxState', { namespace: 'NewsFeedStore' } ) private setAjaxState;
 	@Action( 'setPosts',     { namespace: 'NewsFeedStore' } ) private setPosts;
@@ -63,24 +64,33 @@ export default class NewsFeed extends Vue {
 		}
 	}
 
+	private async deleteSinglePost( postId: string ) {
+		console.info( 'Attempting to delete post:', postId );
+		this.setAjaxState( AjaxState.LOADING );
+		try {
+			const response = await this.deletePost( postId );
+			switch ( response.status ) {
+				case 204:
+					this.setAjaxState( AjaxState.SUCCESS );
+					break;
+				default:
+					console.warn( 'Received an unknown response:', response );
+					this.setAjaxState( AjaxState.ERROR );
+			}
+			this.fetchPosts();
+			return response;
+		} catch ( error ) {
+			console.error( 'Something went wrong while trying to delete a post:', error );
+			this.setAjaxState( AjaxState.ERROR );
+			this.fetchPosts();
+			return error;
+		}
+	}
 	private async loadPosts(): Promise<AxiosResponse> {
 		console.info( 'Loading posts...' );
 		this.setAjaxState( AjaxState.LOADING );
 		try {
 			const response = await this.fetchPosts();
-			if ( 200 === response.status ) {
-				const { data } = response;
-				console.debug( 'Received posts ✅', data );
-				// Convert JSON objects to SinglePosts
-				const convertedPosts: SinglePost[] = data.map( post => {
-					return new PostConstructor( post );
-				} );
-				this.setPosts( convertedPosts );
-				this.setAjaxState( AjaxState.SUCCESS );
-				return response;
-			}
-			console.warn( 'Received an unknown response:', response );
-			this.setAjaxState( AjaxState.ERROR );
 			return response;
 		} catch ( error ) {
 			console.error( 'Something went wrong while fetching posts:', error );
@@ -101,34 +111,22 @@ export default class NewsFeed extends Vue {
 		return this.getAjaxState === AjaxState.ERROR && this.getAjaxState !== AjaxState.LOADING;
 	}
 
+	get showPosts(): boolean {
+		return ! this.showLoading && ! this.showError && 0 < this.getPosts.length;
+	}
+
 	get showLoading(): boolean {
 		return this.getAjaxState !== AjaxState.ERROR && this.getAjaxState === AjaxState.LOADING;
 	}
 
-	get showPosts(): boolean {
-		return this.getAjaxState !== AjaxState.ERROR && this.getAjaxState !== AjaxState.LOADING;
-	}
-
 	@Watch( 'getAjaxState', { immediate: false, deep: false } )
 	private onAjaxStateChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
-		switch ( oldStatus ) {
-			case AjaxState.ERROR:
-				console.log( 'Hiding error secreen...' );
-				break;
-			case AjaxState.LOADING:
-				console.log( 'Hiding loading secreen...' );
-				break;
-			default:
-				console.log( 'Hiding posts...' );
-				break;
-		}
-
 		switch ( newStatus ) {
 			case AjaxState.ERROR:
-				console.log( 'Showing error secreen...' );
+				console.log( 'Showing error screen...' );
 				break;
 			case AjaxState.LOADING:
-				console.log( 'Showing loading secreen...' );
+				console.log( 'Showing loading screen...' );
 				break;
 			default:
 				console.log( 'Showing posts...' );
@@ -137,7 +135,7 @@ export default class NewsFeed extends Vue {
 	}
 
 	@Watch( 'getPosts', { immediate: false, deep: true } )
-	private onPostsChanged( newPosts: SinglePost[], oldPosts: SinglePost[] ): void {
+	private onGetPostsChanged( newPosts: SinglePost[], oldPosts: SinglePost[] ): void {
 		if ( 0 < newPosts.length ) {
 			console.debug( 'Generating post feed with:', newPosts );
 		} else {
@@ -158,6 +156,14 @@ export default class NewsFeed extends Vue {
 .date-separator {
 	display: inline-block;
 	margin: 0 0.25em;
+}
+
+.delete-post {
+	&::before {
+		content: '|';
+		display: inline-block;
+		margin: 0 0.5em;
+	}
 }
 
 .news-feed {

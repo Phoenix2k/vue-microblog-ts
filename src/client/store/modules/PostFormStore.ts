@@ -22,7 +22,6 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 		commit( 'updateTitle', payload );
 	},
 	async submitPost( { commit, state } ): Promise<AxiosResponse> {
-		console.log( state );
 		const formContent = new SubmitPostConstructor( {
 			body: state.body,
 			title: state.title,

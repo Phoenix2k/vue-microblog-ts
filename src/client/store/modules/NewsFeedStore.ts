@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
+import PostConstructor from '../../constructors/PostConstructor';
 import { AjaxStateToString } from '../../helpers';
 import { AjaxState, NewsFeedState, RootState, SinglePost } from '../../types';
 
@@ -10,10 +11,30 @@ export const Actions: ActionTree<NewsFeedState, RootState> = {
 	async fetchPosts( { commit } ): Promise<AxiosResponse> {
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
 			axios.get( API_URL ).then( response => {
-				commit( 'updateAjaxState', AjaxState.SUCCESS );
+				if ( 200 === response.status ) {
+					const { data } = response;
+					console.debug( 'Received posts ✅', data );
+					// Convert JSON objects to SinglePosts
+					const convertedPosts: SinglePost[] = data.map( post => {
+						return new PostConstructor( post );
+					} );
+					commit( 'updatePosts', convertedPosts );
+					commit( 'updateAjaxState', AjaxState.SUCCESS );
+					return response;
+				}
 				resolve( response );
 			} ).catch( error => {
 				commit( 'updateAjaxState', AjaxState.ERROR );
+				reject( error );
+			} );
+		} );
+	},
+	async deletePost( { }, postId: string ): Promise<AxiosResponse> {
+		console.debug( 'Deleting post:', postId );
+		return new Promise<AxiosResponse>( ( resolve, reject ) => {
+			axios.delete( API_URL, { data: { postId } } ).then( response => {
+				resolve( response );
+			} ).catch( error => {
 				reject( error );
 			} );
 		} );

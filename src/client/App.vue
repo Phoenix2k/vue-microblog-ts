@@ -19,7 +19,7 @@ export default class App extends Vue {
 }
 </script>
 <style scoped lang="scss">
-@import url( 'scss/base.scss' );
+@import url( './scss/base.scss' );
 
 #app {
 	text-align: center;
@@ -30,11 +30,6 @@ export default class App extends Vue {
 
 	a {
 		font-weight: bold;
-		color: #2c3e50;
-
-		&.router-link-exact-active {
-			color: #42b983;
-		}
 	}
 }
 </style>
