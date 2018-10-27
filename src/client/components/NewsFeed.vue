@@ -11,7 +11,7 @@
 			</div>
 			<div class="posts" v-for="( post, postIndex ) in getPosts" v-if="showPosts">
 				<article class="single-post">
-					<h2 class="post-title" v-html="post.title"></h2>
+					<h2 class="post-title" v-html.sanitize="post.title"></h2>
 					<div class="post-meta">
 						<small class="post-date">
 							<span class="date-label">Published:</span>
@@ -23,7 +23,7 @@
 							<a class="delete-post" href="#" @click="deleteSinglePost( post.id )">Delete</a>
 						</small>
 					</div>
-					<div class="post-body" v-html="post.body"></div>
+					<div class="post-body" v-html.sanitize="post.body"></div>
 				</article>
 			</div>
 			<div v-if="! showPosts">
