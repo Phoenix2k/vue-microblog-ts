@@ -19,7 +19,7 @@ export class IndexRoute extends BaseRoute {
 	 * @returns {void}
 	 */
 	public static create( router: Router ): void {
-		console.log( 'Index route created ✓' );
+		console.log( 'Public folder ready ✓' );
 		router.get( this.API_ROUTE, ( request: Request, response: Response, next: NextFunction ) => {
 			return new IndexRoute().renderIndex( request, response, next );
 		} );

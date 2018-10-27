@@ -10,7 +10,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
-    "mongoose": "^5.3.6",
+    "mongoose": "^5.3.7",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-class-component": "^6.3.2",
@@ -35,7 +35,7 @@
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-core": "7.0.0-bridge.0",
     "node-sass": "^4.9.4",
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.5",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",
@@ -49,6 +49,7 @@
     "node": "~10.12.0",
     "npm": "~6.4.1"
   },
+  "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
   "keywords": [
     "express",
     "mongodb",
@@ -56,7 +57,6 @@
     "vue"
   ],
   "license": "MIT",
-  "main": "server/main.js",
   "name": "vue-express-ts",
   "postinstall": "npm run build",
   "scripts": {
@@ -69,8 +69,8 @@
     "lint": "npm run lint:client && npm run lint:server",
     "lint:client": "tslint --project tsconfig.json",
     "lint:fix": "npm run lint:fix:client && npm run lint:fix:server",
-    "lint:fix:client": "tslint --fix --project tsconfig.json",
-    "lint:fix:server": "tslint --fix --project tsconfig-server.json",
+    "lint:fix:client": "tslint --fix --config tsconfig.json",
+    "lint:fix:server": "tslint --fix --config tsconfig-server.json",
     "lint:server": "tslint --project tsconfig-server.json",
     "start": "node server/index.js",
     "test": "npm run test:e2e && npm run test:unit",
