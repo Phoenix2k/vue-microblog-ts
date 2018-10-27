@@ -1,5 +1,6 @@
 import * as cors from 'cors';
 import * as dotenv from 'dotenv';
+import * as env from 'env-var';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
@@ -27,10 +28,6 @@ export class Server {
 	constructor() {
 		console.log( 'Setting up server...' );
 		dotenv.config();
-		if ( ! process.env.MONGO_URI ) {
-			console.error( `'MONGO_URI' not defined. Follow the instructions in the README.md file on how to set up your environment.` );
-			process.exit( 1 );
-		}
 		this.app = express();
 		this.config();
 		this.mongoSetup()
@@ -51,7 +48,8 @@ export class Server {
 	 * @returns {void}
 	 */
 	private config(): void {
-		const PUBLIC_FOLDER = 'production' === process.env.NODE_ENV ? '/public' : '../../public';
+		const ENVIRONMENT = env.get( 'NODE_ENV' ).required().asString();
+		const PUBLIC_FOLDER = 'production' === ENVIRONMENT ? '../public' : '../../dist/public';
 		this.app.use( express.static( path.join( __dirname, PUBLIC_FOLDER ) ) );
 		this.app.use( express.json() );
 		this.app.use( cors() );
@@ -65,7 +63,7 @@ export class Server {
 	 * @returns {void}
 	 */
 	private init(): void {
-		const PORT = process.env.PORT || 5000;
+		const PORT = env.get( 'PORT', '5000' ).asIntPositive();
 		this.app.listen( PORT, () => {
 			console.log( `Server started on port ${ PORT }` );
 		} );
@@ -79,9 +77,10 @@ export class Server {
 	 * @returns {Promise<any>} Mongoose connection.
 	 */
 	private async mongoSetup(): Promise<any> {
-		return process.env.MONGO_URI ? mongoose.connect( process.env.MONGO_URI, {
+		const MONGODB_URI = env.get( 'MONGODB_URI' ).required().asString();
+		return mongoose.connect( MONGODB_URI, {
 			useNewUrlParser: true,
-		} ) : Promise.reject( 'MONGO_URI not defined.' );
+		} );
 	}
 
 	/**

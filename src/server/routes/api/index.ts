@@ -1,3 +1,4 @@
+import * as env from 'env-var';
 import { Router } from 'express';
 import * as mongoose from 'mongoose';
 import { PostController } from '../../controllers/post';
@@ -22,7 +23,8 @@ export class ApiRoute extends BaseRoute {
 	 * @returns {void}
 	 */
 	public static create( router: Router ): void {
-		mongoose.set( 'debug', 'production' !== process.env.NODE_ENV );
+		const ENVIRONMENT = env.get( 'NODE_ENV' ).required().asString();
+		mongoose.set( 'debug', 'production' !== ENVIRONMENT );
 		router.route( this.API_ROUTE ).post( this.POST_CONTROLLER.createPost );
 		router.route( this.API_ROUTE ).delete( this.POST_CONTROLLER.deletePost );
 		router.route( this.API_ROUTE ).get( this.POST_CONTROLLER.getPosts );

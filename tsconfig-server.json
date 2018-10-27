@@ -11,7 +11,10 @@
 		"target": "esnext",
 		"module": "commonjs",
 		"outDir": "server",
-		"typeRoots": []
+		"typeRoots": [
+			"./node_modules/**/*.d.ts",
+			"./src/server/**/*.d.ts"
+		]
 	},
 	"exclude": [
 		"node_modules",

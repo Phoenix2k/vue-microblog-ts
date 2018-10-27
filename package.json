@@ -9,6 +9,7 @@
     "axios": "^0.19.0-beta.1",
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",
+    "env-var": "^3.4.0",
     "express": "^4.16.4",
     "mongoose": "^5.3.7",
     "register-service-worker": "^1.5.2",
