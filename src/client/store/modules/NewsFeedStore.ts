@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
+import axios from '../../configs/api';
 import PostConstructor from '../../constructors/PostConstructor';
 import { AjaxStateToString } from '../../helpers';
 import { AjaxState, NewsFeedState, RootState, SinglePost } from '../../types';

@@ -141,8 +141,7 @@ export default class PostForm extends Vue {
 @import url( '../scss/animations.scss' );
 
 $border-color: #ccc;
-$error-background: #e53237;
-$error-color: #fff;
+$error-color: #e53237;
 $reset-color: #ccc;
 $submit-button-background: #47b784;
 $submit-button-color: #fff;
@@ -235,7 +234,6 @@ textarea {
 }
 
 .error {
-	background: $error-background;
 	color: $error-color;
 }
 
