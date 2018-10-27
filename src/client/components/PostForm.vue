@@ -9,7 +9,7 @@
 			<p><button :aria-describedby="ajaxStatusId" id="aria-submit" type="submit" :disabled="disableSubmit">Save</button></p>
 			<transition name="pulse" mode="out-in">
 				<p v-if="showStartOver"><button type="reset" @click="resetForm">Start over</button></p>
-				<p id="aria-submit-status" class="notice" :class="ajaxStatusClasses" :key="getAjaxState" v-if="ajaxStatusText">{{ ajaxStatusText }}</p>
+				<p id="aria-submit-status" class="notice" :class="ajaxStatusClasses" :key="getAjaxStatus" v-if="getAjaxMessage">{{ getAjaxMessage }}</p>
 			</transition>
 		</form>
 	</div>
@@ -19,26 +19,29 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
 import SubmitPostConstructor from '../constructors/SubmitPostConstructor';
-import { AjaxState } from '../types';
+import { AjaxState, UIState } from '../types';
 
 @Component( { } )
 export default class PostForm extends Vue {
 
-	@Action( 'setAjaxState', { namespace: 'PostFormStore' } ) private setAjaxState;
-	@Action( 'setBody',      { namespace: 'PostFormStore' } ) private setBody;
-	@Action( 'setTitle',     { namespace: 'PostFormStore' } ) private setTitle;
-	@Action( 'submitPost',   { namespace: 'PostFormStore' } ) private submitPost;
+	@Action( 'setAjaxMessage', { namespace: 'PostFormStore' } ) private setAjaxMessage;
+	@Action( 'setAjaxStatus',  { namespace: 'PostFormStore' } ) private setAjaxStatus;
+	@Action( 'setBody',        { namespace: 'PostFormStore' } ) private setBody;
+	@Action( 'setTitle',       { namespace: 'PostFormStore' } ) private setTitle;
+	@Action( 'submitPost',     { namespace: 'PostFormStore' } ) private submitPost;
 
-	@Getter( 'getAjaxState', { namespace: 'PostFormStore' } ) private getAjaxState;
-	@Getter( 'getBody',      { namespace: 'PostFormStore' } ) private stateBody;
-	@Getter( 'getTitle',     { namespace: 'PostFormStore' } ) private stateTitle;
+	@Getter( 'getAjaxMessage', { namespace: 'PostFormStore' } ) private getAjaxMessage;
+	@Getter( 'getAjaxStatus',  { namespace: 'PostFormStore' } ) private getAjaxStatus;
+	@Getter( 'getBody',        { namespace: 'PostFormStore' } ) private stateBody;
+	@Getter( 'getTitle',       { namespace: 'PostFormStore' } ) private stateTitle;
 
 	private body: string = '';
+	private uiState: UIState = UIState.READY;
 	private title: string = '';
 
 	private beforeDestroy() {
 		console.log( 'Preparing to destroy post form...' );
-		this.setAjaxState( AjaxState.IDLE );
+		this.setAjaxStatus( AjaxState.IDLE );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
@@ -52,29 +55,24 @@ export default class PostForm extends Vue {
 		console.log( 'Resetting post form...' );
 		this.body = '';
 		this.title = '';
+		this.setAjaxMessage( '' );
+		this.setAjaxStatus( AjaxState.IDLE );
 		this.setBody( '' );
 		this.setTitle( '' );
-
-		// Add sligh delay for other animations to complete
-		this.setAjaxState( AjaxState.IDLE );
+		this.uiState = UIState.READY;
 		document.getElementById( 'title' )!.focus();
 	}
 
 	private async submitForm() {
 		console.info( 'Saving posts...' );
 		this.saveValuesToStore();
-		this.setAjaxState( AjaxState.SENDING );
+		this.uiState = UIState.LOADING;
 		this.submitPost().then( response => {
 			if ( 201 === response.status ) {
 				console.debug( 'Post saved ✅', response );
-				this.setAjaxState( AjaxState.SUCCESS );
-				setTimeout( () => { this.resetForm(); }, 2500 );
-				return response;
 			}
-			console.warn( 'Received an unexpected response while saving new post', response );
-			this.setAjaxState( AjaxState.ERROR );
+			return response;
 		} ).catch( error => {
-			this.setAjaxState( AjaxState.ERROR );
 			console.error( 'Something went wrong while saving new post:', error );
 		} );
 	}
@@ -93,46 +91,57 @@ export default class PostForm extends Vue {
 
 	get ajaxStatusClasses(): string {
 		let classes = '';
-		switch ( this.getAjaxState ) {
+		switch ( this.getAjaxStatus ) {
 			case AjaxState.ERROR: classes = 'error'; break;
-			case AjaxState.LOADING: classes = 'loading'; break;
+			case AjaxState.SENDING: classes = 'loading'; break;
 			case AjaxState.SUCCESS: classes = 'success'; break;
 		}
 		console.log( 'Changing ajax status class(es) to:', classes );
 		return classes;
 	}
 
-	get ajaxStatusText(): string {
-		let statusText = '';
-		switch ( this.getAjaxState ) {
-			case AjaxState.ERROR:
-				statusText = 'Unable to save post. Try again?';
-				break;
-			case AjaxState.SENDING:
-				statusText = 'Saving post...';
-				break;
-			case AjaxState.SUCCESS:
-				statusText = 'Post saved!';
-				break;
-		}
-		if ( statusText ) console.log( 'Setting ajax status text to:', statusText );
-		return statusText;
-	}
-
 	get ajaxStatusId(): string {
-		return this.ajaxStatusText ? 'aria-submit-status' : '';
+		return 0 < this.getAjaxMessage.length ? 'aria-submit-status' : '';
 	}
 
 	get disableSubmit(): boolean {
-		const isDisabled = 0 < this.ajaxStatusText.length || 0 === this.body.length || 0 === this.title.length;
+		const isDisabled = 0 < this.getAjaxMessage.length || 0 === this.body.length || 0 === this.title.length;
 		// console.log( isDisabled ? 'Disabling send button' : 'Enabling send button' );
 		return isDisabled;
 	}
 
 	get showStartOver(): boolean {
-		const isVisible = this.getAjaxState === AjaxState.IDLE && ( 0 < this.body.length || 0 < this.title.length );
+		const isVisible = 0 === this.getAjaxMessage.length && this.uiState === UIState.READY && ( 0 < this.body.length || 0 < this.title.length );
 		// console.log( isVisible ? 'Showing reset button' : 'Hiding reset button' );
 		return isVisible;
+	}
+
+	@Watch( 'getAjaxStatus', { immediate: false, deep: false } )
+	private onAjaxStatusChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
+		switch ( newStatus ) {
+			case AjaxState.ERROR:
+				console.log( 'Showing error message...' );
+				this.uiState = UIState.ERROR;
+				setTimeout( () => {
+					setTimeout( () => {
+						this.setAjaxStatus( AjaxState.IDLE );
+						this.setAjaxMessage( '' );
+						this.uiState = UIState.READY;
+					}, 1500 );
+				}, 500 );
+				break;
+			case AjaxState.SENDING:
+				console.log( 'Showing sending message...' );
+				this.uiState = UIState.LOADING;
+				break;
+			case AjaxState.SUCCESS:
+				console.log( 'Showing success message...' );
+				this.uiState = UIState.READY;
+				setTimeout( () => {
+					this.resetForm();
+				}, 2500 );
+				break;
+		}
 	}
 }
 </script>

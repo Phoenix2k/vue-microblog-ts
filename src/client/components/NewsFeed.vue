@@ -2,8 +2,8 @@
 	<transition name="fade" mode="out-in">
 		<div class="news-feed">
 			<div class="error" v-if="showError">
-				<p class="error-message">Unable to get posts.</p>
-				<p><button @click="loadPosts" type="button">Try again?</button></p>
+				<p class="error-message">{{ getAjaxMessage }}</p>
+				<p><button @click="loadPosts" type="button">Load posts</button></p>
 			</div>
 			<div class="loading" v-if="showLoading">
 				<p>Loading posts</p>
@@ -26,7 +26,7 @@
 					<div class="post-body" v-html.sanitize="post.body"></div>
 				</article>
 			</div>
-			<div v-if="! showPosts">
+			<div v-if="showNoPosts">
 				<p>No posts found. Create the <router-link to="admin">first one</router-link>?</p>
 			</div>
 		</div>
@@ -37,18 +37,22 @@
 import { AxiosResponse } from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
-import { AjaxState, SinglePost } from '../types';
+import { AjaxState, SinglePost, UIState } from '../types';
 
 @Component( { } )
 export default class NewsFeed extends Vue {
 
-	@Action( 'deletePost',   { namespace: 'NewsFeedStore' } ) private deletePost;
-	@Action( 'fetchPosts',   { namespace: 'NewsFeedStore' } ) private fetchPosts;
-	@Action( 'setAjaxState', { namespace: 'NewsFeedStore' } ) private setAjaxState;
-	@Action( 'setPosts',     { namespace: 'NewsFeedStore' } ) private setPosts;
+	@Action( 'deletePost',     { namespace: 'NewsFeedStore' } ) private deletePost;
+	@Action( 'fetchPosts',     { namespace: 'NewsFeedStore' } ) private fetchPosts;
+	@Action( 'setAjaxMessage', { namespace: 'NewsFeedStore' } ) private setAjaxMessage;
+	@Action( 'setAjaxStatus',  { namespace: 'NewsFeedStore' } ) private setAjaxStatus;
+	@Action( 'setPosts',       { namespace: 'NewsFeedStore' } ) private setPosts;
 
-	@Getter( 'getAjaxState', { namespace: 'NewsFeedStore' } ) private getAjaxState;
-	@Getter( 'getPosts',     { namespace: 'NewsFeedStore' } ) private getPosts;
+	@Getter( 'getAjaxStatus',  { namespace: 'NewsFeedStore' } ) private getAjaxStatus;
+	@Getter( 'getAjaxMessage', { namespace: 'NewsFeedStore' } ) private getAjaxMessage;
+	@Getter( 'getPosts',       { namespace: 'NewsFeedStore' } ) private getPosts;
+
+	private uiState: UIState = UIState.LOADING;
 
 	private created(): void {
 		console.info( 'News Feed loaded' );
@@ -66,35 +70,23 @@ export default class NewsFeed extends Vue {
 
 	private async deleteSinglePost( postId: string ) {
 		console.info( 'Attempting to delete post:', postId );
-		this.setAjaxState( AjaxState.LOADING );
 		try {
 			const response = await this.deletePost( postId );
-			switch ( response.status ) {
-				case 204:
-					this.setAjaxState( AjaxState.SUCCESS );
-					break;
-				default:
-					console.warn( 'Received an unknown response:', response );
-					this.setAjaxState( AjaxState.ERROR );
-			}
 			this.fetchPosts();
 			return response;
 		} catch ( error ) {
 			console.error( 'Something went wrong while trying to delete a post:', error );
-			this.setAjaxState( AjaxState.ERROR );
-			this.fetchPosts();
 			return error;
 		}
 	}
 	private async loadPosts(): Promise<AxiosResponse> {
 		console.info( 'Loading posts...' );
-		this.setAjaxState( AjaxState.LOADING );
+		this.uiState = UIState.LOADING;
 		try {
 			const response = await this.fetchPosts();
 			return response;
 		} catch ( error ) {
 			console.error( 'Something went wrong while fetching posts:', error );
-			this.setAjaxState( AjaxState.ERROR );
 			return error;
 		}
 	}
@@ -108,28 +100,41 @@ export default class NewsFeed extends Vue {
 	}
 
 	get showError(): boolean {
-		return this.getAjaxState === AjaxState.ERROR && this.getAjaxState !== AjaxState.LOADING;
+		return this.uiState === UIState.ERROR;
 	}
 
 	get showPosts(): boolean {
-		return ! this.showLoading && ! this.showError && 0 < this.getPosts.length;
+		return this.uiState === UIState.READY && 0 < this.getPosts.length;
+	}
+
+	get showNoPosts(): boolean {
+		return this.uiState === UIState.READY && 0 === this.getPosts.length;
 	}
 
 	get showLoading(): boolean {
-		return this.getAjaxState !== AjaxState.ERROR && this.getAjaxState === AjaxState.LOADING;
+		return this.uiState === UIState.LOADING;
 	}
 
-	@Watch( 'getAjaxState', { immediate: false, deep: false } )
-	private onAjaxStateChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
+	@Watch( 'getAjaxStatus', { immediate: false, deep: false } )
+	private onAjaxStatusChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
 		switch ( newStatus ) {
 			case AjaxState.ERROR:
 				console.log( 'Showing error screen...' );
+				setTimeout( () => {
+					this.uiState = UIState.ERROR;
+				}, 500 );
 				break;
 			case AjaxState.LOADING:
 				console.log( 'Showing loading screen...' );
+				setTimeout( () => {
+					this.uiState = UIState.LOADING;
+				}, 500 );
 				break;
 			default:
 				console.log( 'Showing posts...' );
+				setTimeout( () => {
+					this.uiState = UIState.READY;
+				}, 500 );
 				break;
 		}
 	}

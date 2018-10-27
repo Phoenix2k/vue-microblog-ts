@@ -6,15 +6,16 @@ export enum AjaxState {
 	SUCCESS,
 }
 
-export interface AjaxStatus {
+export interface AjaxCalls {
+	ajaxMessage: string;
 	ajaxStatus: AjaxState;
 }
 
-export interface NewsFeedState extends AjaxStatus {
+export interface NewsFeedState extends AjaxCalls {
 	posts: SinglePost[];
 }
 
-export interface PostFormState extends AjaxStatus {
+export interface PostFormState extends AjaxCalls {
 	body: string;
 	title: string;
 }
@@ -34,4 +35,10 @@ export interface SinglePost {
 export interface SubmitPost {
 	body: string;
 	title: string;
+}
+
+export enum UIState {
+	ERROR,
+	LOADING,
+	READY,
 }

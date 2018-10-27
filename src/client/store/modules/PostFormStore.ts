@@ -10,9 +10,13 @@ const API_URL: string = '/api';
 const Namespaced: boolean = true;
 
 export const Actions: ActionTree<PostFormState, RootState> = {
-	setAjaxState( { commit }, payload: AjaxState ): void {
+	setAjaxMessage( { commit }, payload: string ): void {
+		console.debug( 'Setting ajax message to:', payload );
+		commit( 'updateAjaxMessage', payload );
+	},
+	setAjaxStatus( { commit }, payload: AjaxState ): void {
 		console.debug( 'Setting ajax state to:', AjaxStateToString( payload ) );
-		commit( 'updateAjaxState', payload );
+		commit( 'updateAjaxStatus', payload );
 	},
 	setBody( { commit }, payload: string ): void {
 		console.debug( 'Saving body:', payload );
@@ -23,6 +27,8 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 		commit( 'updateTitle', payload );
 	},
 	async submitPost( { commit, state } ): Promise<AxiosResponse> {
+		commit( 'updateAjaxMessage', 'Saving post...' );
+		commit( 'updateAjaxStatus', AjaxState.SENDING );
 		const formContent = new SubmitPostConstructor( {
 			body: state.body,
 			title: state.title,
@@ -30,8 +36,19 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 		console.debug( 'Saving new post:', formContent );
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
 			axios.post( API_URL, formContent ).then( response => {
-				resolve( response );
+				switch ( response.status ) {
+					case 201:
+						commit( 'updateAjaxMessage', 'Post saved!' );
+						commit( 'updateAjaxStatus', AjaxState.SUCCESS );
+						resolve( response );
+						break;
+					default:
+						commit( 'updateAjaxMessage', 'Unable to save post.' );
+						commit( 'updateAjaxStatus', AjaxState.ERROR );
+						reject( response );
+				}
 			} ).catch( error => {
+				commit( 'updateAjaxStatus', AjaxState.ERROR );
 				reject( error );
 			} );
 		} );
@@ -39,7 +56,11 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 };
 
 export const Getters: GetterTree<PostFormState, RootState> = {
-	getAjaxState( state ): AjaxState {
+	getAjaxMessage( state ): string {
+		console.debug( 'Getting ajax message:', state.ajaxMessage );
+		return state.ajaxMessage;
+	},
+	getAjaxStatus( state ): AjaxState {
 		console.debug( 'Getting ajax state:', AjaxStateToString( state.ajaxStatus ) );
 		return state.ajaxStatus;
 	},
@@ -54,7 +75,11 @@ export const Getters: GetterTree<PostFormState, RootState> = {
 };
 
 export const Mutations: MutationTree<PostFormState> = {
-	updateAjaxState( state, payload: AjaxState ): void {
+	updateAjaxMessage( state, payload: string ): void {
+		console.debug( 'Updating ajax message:', payload );
+		state.ajaxMessage = payload;
+	},
+	updateAjaxStatus( state, payload: AjaxState ): void {
 		console.debug( 'Updating ajax state:', AjaxStateToString( payload ) );
 		state.ajaxStatus = payload;
 	},
@@ -69,6 +94,7 @@ export const Mutations: MutationTree<PostFormState> = {
 };
 
 export const State: PostFormState = {
+	ajaxMessage: '',
 	ajaxStatus: AjaxState.IDLE,
 	body: '',
 	title: '',
