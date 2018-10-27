@@ -1,8 +1,11 @@
 .*
-!.env.example
-!.gitkeep
+/docs/.vuepress/dist
 /node_modules
 /public/*
 /server/*
+
+!.env.example
+!.gitkeep
+!/docs/.vuepress
 !/public/.gitkeep
 !/server/.gitkeep

@@ -1,6 +1,6 @@
-vue-express-ts
-==============
-> Simple news feed written in [TypeScript][typescript] that uses [Vue.js][vue] for the front-end and [MongoDB][mongodb] + [Express][express] for the back-end
+vue-microblog-ts
+================
+> Simple microblogging service written in [TypeScript][typescript] that uses [Vue.js][vue] for the front-end and [MongoDB][mongodb] + [Express][express] for the back-end.
 
 ## License
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE.md)
