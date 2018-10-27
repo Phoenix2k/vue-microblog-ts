@@ -6,6 +6,7 @@
 			<router-link to="/admin">Admin</router-link>
 		</div>
 		<router-view/>
+		<icons />
 	</div>
 </template>
 
