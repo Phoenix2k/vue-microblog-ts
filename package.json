@@ -53,6 +53,7 @@
     "node": "~10.12.0",
     "npm": "~6.4.1"
   },
+  "homepage": "https://phoenix2k.github.io/vue-microblog-ts/",
   "keywords": [
     "express",
     "mongodb",
@@ -62,8 +63,13 @@
   "license": "MIT",
   "name": "vue-microblog-ts",
   "postinstall": "npm run build",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Phoenix2k/vue-microblog-ts"
+  },
   "scripts": {
     "deploy:docs": "scripts/deploy-docs.sh",
+    "deploy:heroku": "scripts/deploy-heroku.sh",
     "dev:client": "vue-cli-service serve",
     "dev:server": "nodemon --project tsconfig-server.json",
     "dev:ui": "vue ui",
