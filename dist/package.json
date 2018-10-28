@@ -1,0 +1,33 @@
+{
+  "author": "Niko Pettersen <niko.pettersen@gmail.com>",
+  "description": "Deployment package for serving generated files",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
+    "env-var": "^3.4.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.7"
+  },
+  "engines": {
+    "node": "~10.12.0",
+    "npm": "~6.4.1"
+  },
+  "homepage": "https://phoenix2k.github.io/vue-microblog-ts/",
+  "keywords": [
+    "express",
+    "mongodb",
+    "typescript",
+    "vue"
+  ],
+  "license": "MIT",
+  "main": "server/index.js",
+  "name": "vue-microblog-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Phoenix2k/vue-microblog-ts"
+  },
+  "scripts": {
+    "start": "node server"
+  },
+  "version": "1.0.0"
+}
