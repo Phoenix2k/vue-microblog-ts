@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"baseUrl": "./",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"moduleResolution": "node",
@@ -10,11 +11,8 @@
 		"suppressImplicitAnyIndexErrors": true,
 		"target": "esnext",
 		"module": "commonjs",
-		"outDir": "server",
-		"typeRoots": [
-			"./node_modules/**/*.d.ts",
-			"./src/server/**/*.d.ts"
-		]
+		"outDir": "dist/server",
+		"typeRoots": []
 	},
 	"exclude": [
 		"node_modules",

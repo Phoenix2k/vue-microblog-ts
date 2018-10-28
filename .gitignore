@@ -1,11 +1,10 @@
 .*
-/docs/.vuepress/dist
-/node_modules
-/public/*
-/server/*
+dist/*
+docs/.vuepress/dist
+node_modules
 
 !.env.example
 !.gitkeep
-!/docs/.vuepress
-!/public/.gitkeep
-!/server/.gitkeep
+!dist/package.json
+!dist/package-lock.json
+!docs/.vuepress
