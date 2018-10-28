@@ -15,7 +15,7 @@ export class ApiRoute extends BaseRoute {
 	public static POST_CONTROLLER: PostController = new PostController();
 
 	/**
-	 * Creates the route
+	 * Create the API endpoints
 	 *
 	 * @class ApiRoute
 	 * @method create
@@ -25,10 +25,9 @@ export class ApiRoute extends BaseRoute {
 	public static create( router: Router ): void {
 		const ENVIRONMENT = env.get( 'NODE_ENV' ).required().asString();
 		mongoose.set( 'debug', 'production' !== ENVIRONMENT );
-		router.route( this.API_ROUTE ).post( this.POST_CONTROLLER.createPost );
 		router.route( this.API_ROUTE ).delete( this.POST_CONTROLLER.deletePost );
 		router.route( this.API_ROUTE ).get( this.POST_CONTROLLER.getPosts );
-		router.route( this.API_ROUTE ).put( this.POST_CONTROLLER.updatePost );
+		router.route( this.API_ROUTE ).post( this.POST_CONTROLLER.createPost );
 		console.log( 'API route created ✓' );
 	}
 

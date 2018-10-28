@@ -68,8 +68,8 @@
     "url": "https://github.com/Phoenix2k/vue-microblog-ts"
   },
   "scripts": {
-    "deploy:docs": "scripts/deploy-docs.sh",
-    "deploy:heroku": "scripts/deploy-heroku.sh",
+    "deploy:docs": "scripts/deploy-docs.bash",
+    "deploy:heroku": "scripts/deploy-heroku.bash",
     "dev:client": "vue-cli-service serve",
     "dev:server": "nodemon --project tsconfig-server.json",
     "dev:ui": "vue ui",

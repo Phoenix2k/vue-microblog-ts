@@ -37,18 +37,28 @@ module.exports = {
 						title: 'Client',
 						collapsable: false,
 						children: [
-							[ '/client/', 'Client' ]
+							[ '/client/', 'Introduction to the client' ]
 						]
 					},
 					{
 						title: 'Server',
 						collapsable: false,
 						children: [
-							[ '/server/', 'Server' ],
+							[ '/server/', 'Introduction to the server' ],
+						],
+					},
+					{
+						title: 'Deployment',
+						collapsable: false,
+						children: [
+							[ '/deployment/', 'Deploying to Heroku' ],
 						],
 					},
 				]
 			},
+		},
+		markdown: {
+			config: md => { }
 		},
 		repo: 'Phoenix2k/vue-microblog-ts',
 		sidebarDepth: 6
