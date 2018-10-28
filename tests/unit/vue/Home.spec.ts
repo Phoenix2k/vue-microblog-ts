@@ -5,18 +5,15 @@ import { Store } from 'vuex-mock-store';
 
 describe( 'Home.vue', () => {
 
+	const store = new Store( {
+		getters: {
+			notificationDuration: 2000,
+		},
+	} );
+
+	const mocks = { $store: store };
+
 	it( 'contains the posts wrapper', () => {
-		const store = new Store( {
-			getters: {
-				'hasErrors': false,
-				'isLoading': false,
-				'NewsFeedStore/getPosts': [],
-			},
-			state: {
-				NewsFeedStore: {},
-			},
-		} );
-		const mocks = { $store: store };
 		const wrapper = shallowMount( Home, { mocks } );
 		expect( wrapper.contains( NewsFeed ) ).toBe( true );
 	} );

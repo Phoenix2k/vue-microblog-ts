@@ -53,7 +53,8 @@ export default class PostForm extends Vue {
 	}
 
 	private mounted() {
-		document.getElementById( 'input-title' )!.focus();
+		const $input = document.getElementById( 'input-title' )!;
+		if ( $input ) $input.focus();
 	}
 
 	private resetForm() {

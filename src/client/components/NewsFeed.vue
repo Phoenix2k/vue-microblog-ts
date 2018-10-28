@@ -27,7 +27,7 @@
 				</article>
 			</div>
 			<div v-if="showNoPosts">
-				<p>No posts found. Create the <router-link to="admin">first one</router-link>?</p>
+				<p class="no-posts">No posts found. Create the <router-link to="admin">first one</router-link>?</p>
 			</div>
 		</div>
 	</transition>
@@ -44,9 +44,6 @@ export default class NewsFeed extends Vue {
 
 	@Action( 'deletePost',     { namespace: 'NewsFeedStore' } ) private deletePost;
 	@Action( 'fetchPosts',     { namespace: 'NewsFeedStore' } ) private fetchPosts;
-	@Action( 'setAjaxMessage', { namespace: 'NewsFeedStore' } ) private setAjaxMessage;
-	@Action( 'setAjaxStatus',  { namespace: 'NewsFeedStore' } ) private setAjaxStatus;
-	@Action( 'setPosts',       { namespace: 'NewsFeedStore' } ) private setPosts;
 
 	@Getter( 'getAjaxStatus',  { namespace: 'NewsFeedStore' } ) private getAjaxStatus;
 	@Getter( 'getAjaxMessage', { namespace: 'NewsFeedStore' } ) private getAjaxMessage;
