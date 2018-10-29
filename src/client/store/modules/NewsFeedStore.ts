@@ -1,18 +1,17 @@
 import { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
-import axios from '../../configs/api';
+import AxiosInstance, { AxiosConfig } from '../../configs/axios';
 import PostConstructor from '../../constructors/PostConstructor';
 import { AjaxStateToString } from '../../helpers';
 import { AjaxState, NewsFeedState, RootState, SinglePost } from '../../types';
 
-const API_URL: string = '/api';
 const Namespaced: boolean = true;
 
 export const Actions: ActionTree<NewsFeedState, RootState> = {
 	async fetchPosts( { commit } ): Promise<AxiosResponse> {
 		commit( 'updateAjaxStatus', AjaxState.LOADING );
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
-			axios.get( API_URL ).then( response => {
+			AxiosInstance.get( AxiosConfig.apiUrl ).then( response => {
 				switch ( response.status ) {
 					case 200:
 						const { data } = response;
@@ -41,7 +40,7 @@ export const Actions: ActionTree<NewsFeedState, RootState> = {
 		console.debug( 'Deleting post:', postId );
 		commit( 'updateAjaxStatus', AjaxState.LOADING );
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
-			axios.delete( API_URL, { data: { postId } } ).then( response => {
+			AxiosInstance.delete( AxiosConfig.apiUrl, { data: { postId } } ).then( response => {
 				commit( 'updateAjaxStatus', AjaxState.SUCCESS );
 				resolve( response );
 			} ).catch( error => {

@@ -1,12 +1,10 @@
 import { AxiosResponse } from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
-import axios from '../../configs/api';
+import AxiosInstance, { AxiosConfig } from '../../configs/axios';
 import SubmitPostConstructor from '../../constructors/SubmitPostConstructor';
 import { AjaxStateToString } from '../../helpers';
 import { AjaxState, PostFormState, RootState } from '../../types';
 
-axios.defaults.baseURL = process.env.BASE_URL;
-const API_URL: string = '/api';
 const Namespaced: boolean = true;
 
 export const Actions: ActionTree<PostFormState, RootState> = {
@@ -35,7 +33,7 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 		} );
 		console.debug( 'Saving new post:', formContent );
 		return new Promise<AxiosResponse>( ( resolve, reject ) => {
-			axios.post( API_URL, formContent ).then( response => {
+			AxiosInstance.post( AxiosConfig.apiUrl, formContent ).then( response => {
 				switch ( response.status ) {
 					case 201:
 						commit( 'updateAjaxMessage', 'Post saved!' );
