@@ -41,8 +41,7 @@ export default class PostForm extends Vue {
 	private title: string = '';
 
 	private beforeDestroy() {
-		console.info( 'Preparing to destroy post form...' );
-		this.setAjaxStatus( AjaxState.IDLE );
+		console.info( 'Saving form for later use...' );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
@@ -57,12 +56,16 @@ export default class PostForm extends Vue {
 		if ( $input ) $input.focus();
 	}
 
+	private resetAjaxStatus() {
+		this.setAjaxStatus( AjaxState.IDLE );
+		this.setAjaxMessage( '' );
+	}
+
 	private resetForm() {
 		console.info( 'Resetting post form...' );
 		this.body = '';
 		this.title = '';
-		this.setAjaxMessage( '' );
-		this.setAjaxStatus( AjaxState.IDLE );
+		this.resetAjaxStatus();
 		this.setBody( '' );
 		this.setTitle( '' );
 		this.uiState = UIState.READY;
@@ -110,6 +113,7 @@ export default class PostForm extends Vue {
 	@Watch( 'getAjaxStatus', { immediate: false, deep: false } )
 	private onAjaxStatusChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
 		switch ( newStatus ) {
+
 			case AjaxState.ERROR:
 				console.info( 'Showing error message...' );
 				this.uiState = UIState.ERROR;
@@ -119,15 +123,17 @@ export default class PostForm extends Vue {
 					text : this.getAjaxMessage,
 				} );
 				setTimeout( () => {
-					this.setAjaxStatus( AjaxState.IDLE );
-					this.setAjaxMessage( '' );
+					this.resetAjaxStatus();
 					this.uiState = UIState.READY;
+					// Focus back on send button in case the user wants to try again
 					this.$nextTick( () => document.getElementById( 'submit-post' )!.focus() );
 				}, this.notificationDuration );
 				break;
+
 			case AjaxState.SENDING:
 				this.uiState = UIState.LOADING;
 				break;
+
 			case AjaxState.SUCCESS:
 				this.$notify( {
 					group: 'ajax-success',
