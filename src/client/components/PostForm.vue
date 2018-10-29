@@ -2,10 +2,10 @@
 	<div class="post-wrapper">
 		<form name="post-form" @submit.prevent="submitForm">
 			<h2 class="form-title">Write a post</h2>
-			<p><label id="input-title" for="title">Title</label></p>
-			<p></p><input aria-describedby="input-title" autocomplete="off" id="title" name="title" required type="text" v-model.trim="title" /></p>
-			<p><label id="textarea-body" for="body">Body</label></p>
-			<p><textarea aria-describedby="textarea-body" autocomplete="off" id="body" name="body" required v-model.trim="body"></textarea></p>
+			<p><label id="title-description" for="title">Title</label></p>
+			<p><input aria-describedby="title-description" autocomplete="off" id="input-title" name="title" required type="text" v-model.trim="title" /></p>
+			<p><label id="body-description" for="body">Body</label></p>
+			<p><textarea aria-describedby="body-description" autocomplete="off" id="input-body" name="body" required v-model.trim="body"></textarea></p>
 			<p><button id="submit-post" type="submit" :disabled="disableSubmit">Save</button></p>
 			<transition name="zoom" mode="out-in">
 				<p v-if="showStartOver"><button type="reset" @click="resetForm">Start over</button></p>
@@ -51,6 +51,11 @@ export default class PostForm extends Vue {
 		this.restoreValuesFromStore();
 	}
 
+	private focusOnElement( id: string ) {
+		const $element = document.getElementById( id )!;
+		if ( $element ) $element.focus();
+	}
+
 	private mounted() {
 		const $input = document.getElementById( 'input-title' )!;
 		if ( $input ) $input.focus();
@@ -69,7 +74,7 @@ export default class PostForm extends Vue {
 		this.setBody( '' );
 		this.setTitle( '' );
 		this.uiState = UIState.READY;
-		document.getElementById( 'title' )!.focus();
+		this.focusOnElement( 'input-title' );
 	}
 
 	private async submitForm() {
@@ -126,7 +131,7 @@ export default class PostForm extends Vue {
 					this.resetAjaxStatus();
 					this.uiState = UIState.READY;
 					// Focus back on send button in case the user wants to try again
-					this.$nextTick( () => document.getElementById( 'submit-post' )!.focus() );
+					this.$nextTick( () => this.focusOnElement( 'submit-button' ) );
 				}, this.notificationDuration );
 				break;
 
