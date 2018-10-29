@@ -55,7 +55,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component
-export default class AjaxNotifications extends Vue {
+export default class NotificationTemplates extends Vue {
 	@Prop( { default: 1500 } ) private notificationDuration!: number;
 }
 

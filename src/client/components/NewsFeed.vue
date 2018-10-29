@@ -7,7 +7,7 @@
 			</div>
 			<div class="loading" v-if="showLoading">
 				<p>Loading posts</p>
-				<img alt="Vue logo" src="../assets/loading.svg" />
+				<svg class="anim anim-loading"><use xlink:href="#anim-loading" /></svg>
 			</div>
 			<transition-group class="posts" name="list-fade" mode="out" tag="div" v-if="showPosts">
 				<article class="single-post" v-for="post in getPosts" v-bind:key="post.id">
@@ -137,13 +137,13 @@ export default class NewsFeed extends Vue {
 				console.info( 'Showing error screen...' );
 				setTimeout( () => {
 					this.uiState = UIState.ERROR;
-				}, 500 );
+				}, 600 );
 				break;
 			default:
 				console.info( 'Showing posts...' );
 				setTimeout( () => {
 					this.uiState = UIState.READY;
-				}, 500 );
+				}, 600 );
 				break;
 		}
 	}
@@ -160,6 +160,11 @@ export default class NewsFeed extends Vue {
 </script>
 
 <style scoped lang="scss">
+.anim-loading {
+	height: 4em;
+	width: 4em;
+}
+
 .date-label {
 	display: inline-block;
 	margin-right: 0.25em;
