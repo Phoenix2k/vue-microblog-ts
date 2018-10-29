@@ -9,8 +9,8 @@
 				<p>Loading posts</p>
 				<img alt="Vue logo" src="../assets/loading.svg" />
 			</div>
-			<div class="posts" v-for="( post, postIndex ) in getPosts" v-if="showPosts">
-				<article class="single-post">
+			<transition-group class="posts" name="list-fade" mode="out" tag="div" v-if="showPosts">
+				<article class="single-post" v-for="post in getPosts" v-bind:key="post.id">
 					<h2 class="post-title" v-html.sanitize="post.title"></h2>
 					<div class="post-meta">
 						<small class="post-date">
@@ -25,7 +25,7 @@
 					</div>
 					<div class="post-body" v-html.sanitize="post.body"></div>
 				</article>
-			</div>
+			</transition-group>
 			<div v-if="showNoPosts">
 				<p class="no-posts">No posts found. Create the <router-link to="admin">first one</router-link>?</p>
 			</div>

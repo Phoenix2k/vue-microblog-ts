@@ -12,11 +12,24 @@
 	transition: opacity .5s;
 }
 
+.list-fade-enter-active, .list-fade-leave-active {
+	transition: all 0.5s;
+}
+
+.list-fade-leave-active {
+	opacity: 0.3;
+}
+
+.list-fade-enter, .list-fade-leave-to {
+	opacity: 0;
+}
+
 .v-fade-bottom-enter-active,
 .v-fade-bottom-leave-active,
 .v-fade-bottom-move {
 	transition: all 1s;
 }
+
 .v-fade-bottom-enter,
 .v-fade-bottom-leave-to {
 	opacity: 0;
