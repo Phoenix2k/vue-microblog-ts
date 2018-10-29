@@ -33,3 +33,10 @@ a {
 .router-link-exact-active {
 	color: #42b983;
 }
+
+.visually-hidden {
+	height: 0;
+	width: 0;
+	overflow: hidden;
+	position: absolute;
+}
