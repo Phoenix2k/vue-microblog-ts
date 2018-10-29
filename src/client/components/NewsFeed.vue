@@ -118,29 +118,29 @@ export default class NewsFeed extends Vue {
 		return this.uiState === UIState.ERROR;
 	}
 
-	get showPosts(): boolean {
-		return this.uiState === UIState.READY && 0 < this.getPosts.length;
+	get showLoading(): boolean {
+		return this.uiState === UIState.LOADING;
 	}
 
 	get showNoPosts(): boolean {
 		return this.uiState === UIState.READY && 0 === this.getPosts.length;
 	}
 
-	get showLoading(): boolean {
-		return this.uiState === UIState.LOADING;
+	get showPosts(): boolean {
+		return this.uiState === UIState.READY && 0 < this.getPosts.length;
 	}
 
 	@Watch( 'getAjaxStatus', { immediate: false, deep: false } )
 	private onAjaxStatusChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
 		switch ( newStatus ) {
 			case AjaxState.ERROR:
-				console.log( 'Showing error screen...' );
+				console.info( 'Showing error screen...' );
 				setTimeout( () => {
 					this.uiState = UIState.ERROR;
 				}, 500 );
 				break;
 			default:
-				console.log( 'Showing posts...' );
+				console.info( 'Showing posts...' );
 				setTimeout( () => {
 					this.uiState = UIState.READY;
 				}, 500 );
@@ -151,7 +151,7 @@ export default class NewsFeed extends Vue {
 	@Watch( 'getPosts', { immediate: false, deep: true } )
 	private onGetPostsChanged( newPosts: SinglePost[], oldPosts: SinglePost[] ): void {
 		if ( 0 < newPosts.length ) {
-			console.debug( 'Generating post feed with:', newPosts );
+			console.debug( 'Generating news feed with:', newPosts );
 		} else {
 			console.debug( 'No posts to show', newPosts );
 		}

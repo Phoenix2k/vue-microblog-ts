@@ -41,14 +41,14 @@ export default class PostForm extends Vue {
 	private title: string = '';
 
 	private beforeDestroy() {
-		console.log( 'Preparing to destroy post form...' );
+		console.info( 'Preparing to destroy post form...' );
 		this.setAjaxStatus( AjaxState.IDLE );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
 
 	private created() {
-		console.log( 'Post form created' );
+		console.info( 'Post form created' );
 		this.restoreValuesFromStore();
 	}
 
@@ -58,7 +58,7 @@ export default class PostForm extends Vue {
 	}
 
 	private resetForm() {
-		console.log( 'Resetting post form...' );
+		console.info( 'Resetting post form...' );
 		this.body = '';
 		this.title = '';
 		this.setAjaxMessage( '' );
@@ -84,26 +84,26 @@ export default class PostForm extends Vue {
 	}
 
 	private restoreValuesFromStore() {
-		console.log( 'Restoring previous values from store...' );
+		console.info( 'Restoring previous values from store...' );
 		this.body = this.stateBody;
 		this.title = this.stateTitle;
 	}
 
 	private saveValuesToStore() {
-		console.log( 'Saving values to store...' );
+		console.info( 'Saving values to store...' );
 		this.setBody( this.body );
 		this.setTitle( this.title );
 	}
 
 	get disableSubmit(): boolean {
 		const isDisabled = 0 < this.getAjaxMessage.length || 0 === this.body.length || 0 === this.title.length;
-		// console.log( isDisabled ? 'Disabling send button' : 'Enabling send button' );
+		// console.debug( isDisabled ? 'Disabling send button' : 'Enabling send button' );
 		return isDisabled;
 	}
 
 	get showStartOver(): boolean {
 		const isVisible = 0 === this.getAjaxMessage.length && this.uiState === UIState.READY && ( 0 < this.body.length || 0 < this.title.length );
-		// console.log( isVisible ? 'Showing reset button' : 'Hiding reset button' );
+		// console.debug( isVisible ? 'Showing reset button' : 'Hiding reset button' );
 		return isVisible;
 	}
 
@@ -111,7 +111,7 @@ export default class PostForm extends Vue {
 	private onAjaxStatusChanged( newStatus: AjaxState, oldStatus: AjaxState ): void {
 		switch ( newStatus ) {
 			case AjaxState.ERROR:
-				console.log( 'Showing error message...' );
+				console.info( 'Showing error message...' );
 				this.uiState = UIState.ERROR;
 				this.$notify( {
 					group: 'ajax-error',
@@ -134,9 +134,9 @@ export default class PostForm extends Vue {
 					title: 'Success',
 					text : this.getAjaxMessage,
 				} );
-				this.uiState = UIState.READY;
 				setTimeout( () => {
 					this.resetForm();
+					this.uiState = UIState.READY;
 				}, this.notificationDuration );
 				break;
 		}

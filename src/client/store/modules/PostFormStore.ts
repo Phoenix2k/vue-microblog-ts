@@ -15,7 +15,7 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 		commit( 'updateAjaxMessage', payload );
 	},
 	setAjaxStatus( { commit }, payload: AjaxState ): void {
-		console.debug( 'Setting ajax state to:', AjaxStateToString( payload ) );
+		console.debug( 'Setting ajax status to:', AjaxStateToString( payload ) );
 		commit( 'updateAjaxStatus', payload );
 	},
 	setBody( { commit }, payload: string ): void {
@@ -61,7 +61,7 @@ export const Getters: GetterTree<PostFormState, RootState> = {
 		return state.ajaxMessage;
 	},
 	getAjaxStatus( state ): AjaxState {
-		console.debug( 'Getting ajax state:', AjaxStateToString( state.ajaxStatus ) );
+		console.debug( 'Getting ajax status:', AjaxStateToString( state.ajaxStatus ) );
 		return state.ajaxStatus;
 	},
 	getBody( state ): string {

@@ -55,7 +55,7 @@ export const Actions: ActionTree<NewsFeedState, RootState> = {
 		commit( 'updateAjaxMessage', payload );
 	},
 	setAjaxStatus( { commit }, payload: AjaxState ): void {
-		console.debug( 'Setting ajax state to:', AjaxStateToString( payload ) );
+		console.debug( 'Setting ajax status to:', AjaxStateToString( payload ) );
 		commit( 'updateAjaxStatus', payload );
 	},
 	setPosts( { commit }, payload: SinglePost[] ): void {
@@ -71,7 +71,7 @@ export const Getters: GetterTree<NewsFeedState, RootState> = {
 		return state.ajaxMessage;
 	},
 	getAjaxStatus( state ): AjaxState {
-		console.debug( 'Getting ajax state:', AjaxStateToString( state.ajaxStatus ) );
+		console.debug( 'Getting ajax status:', AjaxStateToString( state.ajaxStatus ) );
 		return state.ajaxStatus;
 	},
 	getPosts( state ): SinglePost[] {
@@ -86,7 +86,7 @@ export const Mutations: MutationTree<NewsFeedState> = {
 		state.ajaxMessage = payload;
 	},
 	updateAjaxStatus( state, payload: AjaxState ): void {
-		console.debug( 'Updating ajax state:', AjaxStateToString( payload ) );
+		console.debug( 'Updating ajax status:', AjaxStateToString( payload ) );
 		state.ajaxStatus = payload;
 	},
 	updatePosts( state, payload: SinglePost[] ): void {

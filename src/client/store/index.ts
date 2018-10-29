@@ -9,7 +9,7 @@ Vue.use( Vuex );
 export const Actions: ActionTree<{}, RootState> = {
 	setNotificationDuration( { commit }, payload: number ): void {
 		console.log( 'Setting notification duration to:' , payload );
-		commit( 'updateLoading', payload );
+		commit( 'updateNotificationDuration', payload );
 	},
 };
 
@@ -20,7 +20,7 @@ export const Getters: GetterTree<RootState, RootState> = {
 };
 
 export const Mutations: MutationTree<RootState> = {
-	setNotificationDuration( state, payload: number ) {
+	updateNotificationDuration( state, payload: number ) {
 		state.notificationDuration = payload;
 	},
 };
