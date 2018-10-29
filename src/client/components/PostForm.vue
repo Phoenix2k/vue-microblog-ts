@@ -3,9 +3,9 @@
 		<form name="post-form" @submit.prevent="submitForm">
 			<h2 class="form-title">Write a post</h2>
 			<p><label id="title-description" for="title">Title</label></p>
-			<p><input aria-describedby="title-description" autocomplete="off" id="input-title" name="title" required type="text" v-model.trim="title" /></p>
+			<p><input aria-describedby="title-description" autocomplete="off" :disabled="disableInput" id="input-title" name="title" required type="text" v-model.trim="title" /></p>
 			<p><label id="body-description" for="body">Body</label></p>
-			<p><textarea aria-describedby="body-description" autocomplete="off" id="input-body" name="body" required v-model.trim="body"></textarea></p>
+			<p><textarea aria-describedby="body-description" autocomplete="off" :disabled="disableInput" id="input-body" name="body" required v-model.trim="body"></textarea></p>
 			<p><button id="submit-post" type="submit" :disabled="disableSubmit">Save</button></p>
 			<transition name="zoom" mode="out-in">
 				<p v-if="showStartOver"><button type="reset" @click="resetForm">Start over</button></p>
@@ -101,6 +101,10 @@ export default class PostForm extends Vue {
 		console.info( 'Saving values to store...' );
 		this.setBody( this.body );
 		this.setTitle( this.title );
+	}
+
+	get disableInput(): boolean {
+		return AjaxState.IDLE !== this.getAjaxStatus;
 	}
 
 	get disableSubmit(): boolean {
