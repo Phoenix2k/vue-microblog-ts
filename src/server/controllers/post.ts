@@ -25,7 +25,7 @@ export class PostController {
 		}, ( error, post ) => {
 			if ( error ) return response.send( error );
 			if ( ! post ) return response.status( 404 ).send( post );
-			response.sendStatus( 204 );
+			response.sendStatus( 200 );
 		} );
 	}
 

@@ -30,7 +30,7 @@ DELETE /api
 #### Response code
 | Code | Description
 |:----:|:------------
-| 204  | Post successfully deleted
+| 200  | Post successfully deleted
 | 404  | `postId` not found
 | 500  | Server not available
 

@@ -70,7 +70,7 @@ export default class NewsFeed extends Vue {
 		try {
 			const response = await this.deletePost( postId );
 			switch ( response.status ) {
-				case 204:
+				case 200:
 					this.$notify( {
 						group: 'post-deleted',
 						title: 'Success',
