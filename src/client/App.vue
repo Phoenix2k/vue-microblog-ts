@@ -29,7 +29,7 @@ import './scss/notifications.scss';
 	components: {
 		Animations,
 		Icons,
-		NotificationTemplates
+		NotificationTemplates,
 	},
 } )
 export default class App extends Vue {

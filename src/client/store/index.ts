@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex, { ActionTree, GetterTree, MutationTree, StoreOptions } from 'vuex';
 import { RootState } from '../types';
+import { CreatePostStore } from './modules/CreatePostStore';
 import { NewsFeedStore } from './modules/NewsFeedStore';
-import { PostFormStore } from './modules/PostFormStore';
 
 Vue.use( Vuex );
 
@@ -33,8 +33,8 @@ const Store: StoreOptions<RootState> = {
 	actions: Actions,
 	getters: Getters,
 	modules: {
+		CreatePostStore,
 		NewsFeedStore,
-		PostFormStore,
 	},
 	mutations: Mutations,
 	state: State,

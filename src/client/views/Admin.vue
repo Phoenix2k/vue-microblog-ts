@@ -7,11 +7,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import PostForm from '../components/PostForm.vue';
+import CreatePost from '../components/CreatePost.vue';
 
 @Component( {
 	components: {
-		'post-form': PostForm,
+		'post-form': CreatePost,
 	},
 } )
 export default class Admin extends Vue {

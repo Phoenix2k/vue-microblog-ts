@@ -3,11 +3,11 @@ import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import AxiosInstance, { AxiosConfig } from '../../configs/axios';
 import SubmitPostConstructor from '../../constructors/SubmitPostConstructor';
 import { AjaxStateToString } from '../../helpers';
-import { AjaxState, PostFormState, RootState } from '../../types';
+import { AjaxState, CreatePostState, RootState } from '../../types';
 
 const Namespaced: boolean = true;
 
-export const Actions: ActionTree<PostFormState, RootState> = {
+export const Actions: ActionTree<CreatePostState, RootState> = {
 	setAjaxMessage( { commit }, payload: string ): void {
 		console.debug( 'Setting ajax message to:', payload );
 		commit( 'updateAjaxMessage', payload );
@@ -53,7 +53,7 @@ export const Actions: ActionTree<PostFormState, RootState> = {
 	},
 };
 
-export const Getters: GetterTree<PostFormState, RootState> = {
+export const Getters: GetterTree<CreatePostState, RootState> = {
 	getAjaxMessage( state ): string {
 		console.debug( 'Getting ajax message:', state.ajaxMessage );
 		return state.ajaxMessage;
@@ -72,7 +72,7 @@ export const Getters: GetterTree<PostFormState, RootState> = {
 	},
 };
 
-export const Mutations: MutationTree<PostFormState> = {
+export const Mutations: MutationTree<CreatePostState> = {
 	updateAjaxMessage( state, payload: string ): void {
 		console.debug( 'Updating ajax message:', payload );
 		state.ajaxMessage = payload;
@@ -91,14 +91,14 @@ export const Mutations: MutationTree<PostFormState> = {
 	},
 };
 
-export const State: PostFormState = {
+export const State: CreatePostState = {
 	ajaxMessage: '',
 	ajaxStatus: AjaxState.IDLE,
 	body: '',
 	title: '',
 };
 
-export const PostFormStore: Module<PostFormState, RootState> = {
+export const CreatePostStore: Module<CreatePostState, RootState> = {
 	actions: Actions,
 	getters: Getters,
 	mutations: Mutations,

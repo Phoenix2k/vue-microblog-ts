@@ -12,17 +12,17 @@ describe( 'Admin.vue', () => {
 	it( 'contains the post form wrapper', () => {
 		const store = new Store( {
 			getters: {
-				'PostFormStore/getAjaxMessage': '',
-				'PostFormStore/getBody': '',
-				'PostFormStore/getTitle': '',
+				'CreatePostStore/getAjaxMessage': '',
+				'CreatePostStore/getBody': '',
+				'CreatePostStore/getTitle': '',
 			},
 			state: {
-				PostFormStore: { },
+				CreatePostStore: { },
 			},
 		} );
 		const mocks = { $store: store };
 		const wrapper = mount( Admin, { mocks } );
-		expect( wrapper.contains( '.post-wrapper' ) ).toBe( true );
+		expect( wrapper.contains( '.form-wrapper' ) ).toBe( true );
 	} );
 
 } );

@@ -1,6 +1,6 @@
 <template lang="html">
-	<div class="post-wrapper">
-		<form name="post-form" @submit.prevent="submitForm">
+	<div class="form-wrapper">
+		<form name="create-post" @submit.prevent="submitForm">
 			<h2 class="form-title">Write a post</h2>
 			<p><label id="title-description" for="title">Title</label></p>
 			<p><input aria-describedby="title-description" autocomplete="off" :disabled="disableInput" id="input-title" name="title" required type="text" v-model.trim="title" /></p>
@@ -21,20 +21,20 @@ import SubmitPostConstructor from '../constructors/SubmitPostConstructor';
 import { AjaxState, UIState } from '../types';
 
 @Component
-export default class PostForm extends Vue {
+export default class CreatePost extends Vue {
 
-	@Action( 'setAjaxMessage', { namespace: 'PostFormStore' } ) private setAjaxMessage;
-	@Action( 'setAjaxStatus',  { namespace: 'PostFormStore' } ) private setAjaxStatus;
-	@Action( 'setBody',        { namespace: 'PostFormStore' } ) private setBody;
-	@Action( 'setTitle',       { namespace: 'PostFormStore' } ) private setTitle;
-	@Action( 'submitPost',     { namespace: 'PostFormStore' } ) private submitPost;
+	@Action( 'setAjaxMessage', { namespace: 'CreatePostStore' } ) private setAjaxMessage;
+	@Action( 'setAjaxStatus',  { namespace: 'CreatePostStore' } ) private setAjaxStatus;
+	@Action( 'setBody',        { namespace: 'CreatePostStore' } ) private setBody;
+	@Action( 'setTitle',       { namespace: 'CreatePostStore' } ) private setTitle;
+	@Action( 'submitPost',     { namespace: 'CreatePostStore' } ) private submitPost;
 
 	@Getter( 'getNotificationDuration' ) private notificationDuration;
 
-	@Getter( 'getAjaxMessage', { namespace: 'PostFormStore' } ) private getAjaxMessage;
-	@Getter( 'getAjaxStatus',  { namespace: 'PostFormStore' } ) private getAjaxStatus;
-	@Getter( 'getBody',        { namespace: 'PostFormStore' } ) private stateBody;
-	@Getter( 'getTitle',       { namespace: 'PostFormStore' } ) private stateTitle;
+	@Getter( 'getAjaxMessage', { namespace: 'CreatePostStore' } ) private getAjaxMessage;
+	@Getter( 'getAjaxStatus',  { namespace: 'CreatePostStore' } ) private getAjaxStatus;
+	@Getter( 'getBody',        { namespace: 'CreatePostStore' } ) private stateBody;
+	@Getter( 'getTitle',       { namespace: 'CreatePostStore' } ) private stateTitle;
 
 	private body: string = '';
 	private uiState: UIState = UIState.READY;
@@ -257,6 +257,11 @@ textarea {
 	color: $error-color;
 }
 
+.form-wrapper {
+	margin: 0 auto;
+	max-width: 30em;
+}
+
 .form-title {
 	border-bottom: 1px solid $border-color;
 	margin: 0.5em;
@@ -265,11 +270,6 @@ textarea {
 
 .notice {
 	font-size: 0.9em;
-}
-
-.post-wrapper {
-	margin: 0 auto;
-	max-width: 30em;
 }
 
 .success {

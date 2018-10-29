@@ -15,7 +15,7 @@ export interface NewsFeedState extends AjaxCalls {
 	posts: SinglePost[];
 }
 
-export interface PostFormState extends AjaxCalls {
+export interface CreatePostState extends AjaxCalls {
 	body: string;
 	title: string;
 }
