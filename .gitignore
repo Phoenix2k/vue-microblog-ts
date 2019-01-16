@@ -5,6 +5,7 @@ node_modules
 
 !.env.example
 !.gitkeep
+!.travis.yml
 !dist/package.json
 !dist/package-lock.json
 !docs/.vuepress

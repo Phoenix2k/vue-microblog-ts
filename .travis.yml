@@ -1,0 +1,17 @@
+cache:
+  directories:
+    - ~/.cache
+  npm: true
+  override:
+    - npm ci
+    - npm run cy:verify
+env:
+  - NODE_ENV=development
+install:
+  - npm ci
+language: node_js
+node_js:
+  - "11"
+script:
+  - npm run lint
+  - npm run test
