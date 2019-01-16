@@ -6,7 +6,7 @@ vue-microblog-ts
 See the [documentation][docs] for more details.
 
 ## License
-[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE.md)
+[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE.md) [![Greenkeeper badge](https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg)](https://greenkeeper.io/)
 
 [docs]: https://phoenix2k.github.io/vue-microblog-ts/ "Project documentation"
 [mongodb]: https://www.mongodb.com "MongoDB"
