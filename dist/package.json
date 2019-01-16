@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "main": "server/index.js",
-  "name": "vue-microblog-ts",
+  "name": "vue-microblog-ts-deploy",
   "repository": {
     "type": "git",
     "url": "https://github.com/Phoenix2k/vue-microblog-ts"
