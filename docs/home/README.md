@@ -2,8 +2,8 @@ vue-microblog-ts
 ================
 > Simple microblogging service written in [TypeScript][typescript] that uses [Vue.js][vue-js] for the front-end and [Node.js][node-js] + [MongoDB][mongodb] for the back-end.
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg)](https://greenkeeper.io/)
-[![Build status](https://travis-ci.org/Phoenix2k/vue-microblog-ts.svg?branch=master)](https://travis-ci.org/Phoenix2k/vue-microblog-ts)
+[![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url]
+[![Build status][travis-badge]][travis-url]
 
 ## Introduction
 This is an example project showing how to build a JavaScript-based [CRUD][crud] [API][api] using [TypeScript][typescript] with some of the latest tools available.
@@ -193,7 +193,7 @@ The contents of the `dist` folder is meant to be run in an actual production env
 * [MDN Web Docs][mdn-web-docs]
 * [Mongoose documentation][mongoose-docs]
 * [Stack Overflow][stack-overflow] :pray:
-* [TypeScript documentation][typescript]
+* [TypeScript documentation][typescript-docs]
 * [TypeScript Node][ts-node]
 * [TypeScript Node Starter][typescript-node-starter]
 * [Vue.js][vue-js] + [TypeScript documentation][vue-ts]
@@ -209,7 +209,7 @@ The contents of the `dist` folder is meant to be run in an actual production env
 >This list doesn't contain the countless amount of GitHub issues I had to dig through to make this project work in TypeScript since the documentation is still being worked on, but thanks to everyone involved in making these wonderful things a reality!
 
 ## License
-![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
+![MIT][license-badge]
 
 [api]: https://en.wikipedia.org/wiki/Application_programming_interface "Application programming interface"
 [chrome]: https://www.google.com/chrome/ "Chrome browser"
@@ -217,33 +217,38 @@ The contents of the `dist` folder is meant to be run in an actual production env
 [cypress-docs]: https://docs.cypress.io/ "Cypress documentation"
 [e2e]: https://www.techopedia.com/definition/7035/end-to-end-test "Read more about end-to-end testing on Technopedia"
 [express]: https://expressjs.com "Express - Fast, unopinionated, minimalist web framework for Node.js"
-[facebook]: https://www.facebook.com/ "Facebook"
+[facebook]: https://www.facebook.com/
 [crud]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete "Create, read, update and delete"
 [headless-chrome]: https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md "Headless Chromium"
-[heroku]: https://www.heroku.com/ "Heroku CLI"
-[heroku-cli]: https://toolbelt.heroku.com/ "Heroku CLI"
+[heroku]: https://www.heroku.com/
+[heroku-cli]: https://toolbelt.heroku.com/
 [heroku-dev-center]: https://devcenter.heroku.com/ "Heroku Dev Center"
 [git]: https://git-scm.com/ "Git version control"
+[greenkeeper-badge]: https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg
+[greenkeeper-url]: https://greenkeeper.io/
 [jest]: https://jestjs.io/ "Delightful JavaScript Testing"
 [jest-docs]: https://jestjs.io/docs/en/getting-started "Jest documentation"
 [jest-github]: https://github.com/facebook/jest "Jest on GitHub"
-[mlab]: https://mlab.com/ "mLab"
-[mongodb]: https://www.mongodb.com "MongoDB"
+[license-badge]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[mlab]: https://mlab.com/
+[mongodb]: https://www.mongodb.com
 [mongodb-install]: https://docs.mongodb.com/manual/installation/ "Install MongoDB"
 [mongoose]: https://mongoosejs.com/ "Elegant Mongodb object modeling for Node.js"
 [mongoose-docs]: https://mongoosejs.com/docs/ "Mongoose documentation"
 [json-api]: https://jsonapi.org/ "A specification for building APIs in JSON"
-[mdn-web-docs]: https://developer.mozilla.org/ "MDN web docs"
-[node-js]: https://nodejs.org/ "Node.js"
-[nginx]: https://nginx.org/ "Nginx"
+[mdn-web-docs]: https://developer.mozilla.org/
+[node-js]: https://nodejs.org/
+[nginx]: https://nginx.org/
 [npm]: https://www.npmjs.com/ "npm - The package manager for JavaScript"
-[stack-overflow]: https://stackoverflow.com/ "Stack Overflow"
+[stack-overflow]: https://stackoverflow.com/
 [tslint]: https://palantir.github.io/tslint/ "TSLint - An extensible linter for the TypeScript language"
 [ts-node]: https://github.com/TypeStrong/ts-node "TypeScript execution and REPL for node.js, with source map support"
-[traversy-media]: http://www.traversymedia.com/ "Traversy Media"
+[traversy-media]: http://www.traversymedia.com/
 [traversy-video]: https://www.youtube.com/watch?v=j55fHUJqtyw&list=PLillGF-RfqbYSx-Ab1xWVanGKtowTsnNm "Full Stack Vue.js, Express & MongoDB"
-[typescript]: https://www.typescriptlang.org "TypeScript"
-[typescript-docs]: https://www.typescriptlang.org/docs/ "TypeScript documentation"
+[travis-badge]: https://travis-ci.org/Phoenix2k/vue-microblog-ts.svg?branch=master
+[travis-url]: https://travis-ci.org/Phoenix2k/vue-microblog-ts
+[typescript]: https://www.typescriptlang.org
+[typescript-docs]: https://www.typescriptlang.org/docs/
 [typescript-node-starter]: https://github.com/Microsoft/TypeScript-Node-Starter "A starter template for TypeScript and Node"
 [unit-testing]: https://en.wikipedia.org/wiki/Unit_testing "Read more about unit testing on Wikipedia"
 [vue-blog-post-2017]: https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08 "Upcoming TypeScript Changes in Vue 2.5"
@@ -254,7 +259,7 @@ The contents of the `dist` folder is meant to be run in an actual production env
 [vue-notification]: https://github.com/euvl/vue-notification "Vue.js 2 library for showing notifications"
 [vue-progressbar]: https://github.com/hilongjw/vue-progressbar "A lightweight progress bar for Vue"
 [vue-router]: https://router.vuejs.org/ "The official router for Vue.js"
-[vue-test-utils]: https://vue-test-utils.vuejs.org/ "Vue Test Utils"
+[vue-test-utils]: https://vue-test-utils.vuejs.org/
 [vue-ts]: https://vuejs.org/v2/guide/typescript.html "Vue.js - TypeScript Support"
 [vuex-mock-store]: https://github.com/posva/vuex-mock-store "Simple and straightforward Vuex Store mock for vue-test-utils"
 [vuex-property-decorator]: https://github.com/kaorun343/vue-property-decorator "Vue.js and Property Decorator"
