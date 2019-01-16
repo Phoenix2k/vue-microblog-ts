@@ -2,6 +2,7 @@
 dist/*
 docs/.vuepress/dist
 node_modules
+tests/e2e/videos/*
 
 !.env.example
 !.gitkeep
