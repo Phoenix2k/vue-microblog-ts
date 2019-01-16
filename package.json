@@ -47,7 +47,7 @@
     "vue-template-compiler": "^2.5.21",
     "vuepress": "^0.14.8",
     "vuex-class": "^0.3.1",
-    "vuex-mock-store": "0.0.5"
+    "vuex-mock-store": "0.0.6"
   },
   "engines": {
     "node": "~11.6.0",
