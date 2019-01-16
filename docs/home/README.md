@@ -2,6 +2,9 @@ vue-microblog-ts
 ================
 > Simple microblogging service written in [TypeScript][typescript] that uses [Vue.js][vue-js] for the front-end and [Node.js][node-js] + [MongoDB][mongodb] for the back-end.
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg)](https://greenkeeper.io/)
+[![Build status](https://travis-ci.org/Phoenix2k/vue-microblog-ts.svg?branch=master)](https://travis-ci.org/Phoenix2k/vue-microblog-ts)
+
 ## Introduction
 This is an example project showing how to build a JavaScript-based [CRUD][crud] [API][api] using [TypeScript][typescript] with some of the latest tools available.
 
