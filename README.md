@@ -1,12 +1,14 @@
 vue-microblog-ts
 ================
-> Simple microblogging service written in [TypeScript][typescript] that uses [Vue.js][vue-js] for the front-end and [Node.js][node-js] + [MongoDB][mongodb] for the back-end.
+Small microblogging service written in [TypeScript][typescript] based on [Express][express], [Mongoose][mongoose] and [Vue.js][vue-js].
 
 [![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url]
 [![Build status][travis-badge]][travis-url]
 
+>This project was bootstrapped with [Vue CLI 3][vue-cli]
+
 ## Documentation
-See the [documentation][docs] for more details.
+See [GitHub pages][docs].
 
 ## License
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
@@ -14,9 +16,10 @@ See the [documentation][docs] for more details.
 [docs]: https://phoenix2k.github.io/vue-microblog-ts/
 [greenkeeper-badge]: https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg
 [greenkeeper-url]: https://greenkeeper.io/
-[mongodb]: https://www.mongodb.com
-[node-js]: https://nodejs.org/en/
+[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
+[express]: https://expressjs.com "Express &ndash; Fast, unopinionated, minimalist web framework for Node.js"
 [travis-badge]: https://travis-ci.org/Phoenix2k/vue-microblog-ts.svg?branch=master
 [travis-url]: https://travis-ci.org/Phoenix2k/vue-microblog-ts
 [typescript]: https://www.typescriptlang.org
-[vue-js]: https://vuejs.org "Vue.js - The Progressive JavaScript Framework"
+[vue-cli]: https://cli.vuejs.org/ "Vue CLI &ndash; Standard Tooling for Vue.js Development"
+[vue-js]: https://vuejs.org "Vue.js &ndash; The Progressive JavaScript Framework"

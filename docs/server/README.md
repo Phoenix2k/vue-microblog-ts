@@ -131,9 +131,9 @@ The production files will be available under the `dist/server` folder.
 
 See the [main documentation](../home/#building-for-production) for more details on how to start the server.
 
-[express]: https://expressjs.com "Express - Fast, unopinionated, minimalist web framework for Node.js"
+[express]: https://expressjs.com "Express &ndash; Fast, unopinionated, minimalist web framework for Node.js"
 [mongodb]: https://www.mongodb.com "MongoDB"
-[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for node.js"
+[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
 [mongoose-schemas]: https://mongoosejs.com/docs/guide.html "Mongoose schemas"
 [mongoose-validation]: https://mongoosejs.com/docs/validation.html "Mongoose validation"
 [nodemon]: https://nodemon.io/ "Nodemon is a utility that will monitor for any changes in your source and automatically restart your server"

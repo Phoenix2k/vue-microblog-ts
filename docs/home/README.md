@@ -1,9 +1,11 @@
 vue-microblog-ts
 ================
-> Simple microblogging service written in [TypeScript][typescript] that uses [Vue.js][vue-js] for the front-end and [Node.js][node-js] + [MongoDB][mongodb] for the back-end.
+Small microblogging service written in [TypeScript][typescript] based on [Express][express], [Mongoose][mongoose] and [Vue.js][vue-js].
 
 [![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url]
 [![Build status][travis-badge]][travis-url]
+
+>This project was bootstrapped with [Vue CLI 3][vue-cli]
 
 ## Introduction
 This is an example project showing how to build a JavaScript-based [CRUD][crud] [API][api] using [TypeScript][typescript] with some of the latest tools available.
@@ -13,7 +15,7 @@ This is by no means ready for production and serves only to satisfy your curiosi
 :::
 
 ## Background
-I was originally inspired by [Brad Traversy][traversy-media]'s video series on how to create a [Full Stack Vue.js, Express & MongoDB][traversy-video] application and wanted to build something similar using TypeScript. With most of the popular front-end frameworks moving in that direction, I figured this was the perfect opportunity to see how [Vue][vue-js] is handling this transition after having initially made [this announcement][vue-blog-post-2017] back in 2017 and later [this revelation][vue-blog-post-2018] in 2018.
+I was originally inspired by [Brad Traversy][traversy-media]'s video series on how to create a [Full Stack Vue.js, Express & MongoDB][traversy-video] application and wanted to build something similar using TypeScript. With most of the popular front-end frameworks moving in that direction, I figured this was the perfect opportunity to see how [Vue][vue-js] is handling this transition after having initially made [this announcement][vue-blog-post-2017] back in 2017 and later [this][vue-blog-post-2018] in 2018.
 
 [TypeScript][typescript] happens to be a great choice when it comes to building JavaScript-based APIs, since it has very strong type support which comes in handy when dealing with data. It has the added benefit of giving you access to some of the latest features of JavaScript that are still in the planning phase, while still giving you full freedom to write plain old JS if you choose to do so.
 
@@ -206,8 +208,6 @@ The contents of the `dist` folder is meant to be run in an actual production env
 * [Vuex Mock Store][vuex-mock-store]
 * [Vuex Property Decorator][vuex-property-decorator]
 
->This list doesn't contain the countless amount of GitHub issues I had to dig through to make this project work in TypeScript since the documentation is still being worked on, but thanks to everyone involved in making these wonderful things a reality!
-
 ## License
 ![MIT][license-badge]
 
@@ -215,8 +215,8 @@ The contents of the `dist` folder is meant to be run in an actual production env
 [chrome]: https://www.google.com/chrome/ "Chrome browser"
 [cypress]: https://www.cypress.io/ "Fast, easy and reliable testing for anything that runs in a browser"
 [cypress-docs]: https://docs.cypress.io/ "Cypress documentation"
-[e2e]: https://www.techopedia.com/definition/7035/end-to-end-test "Read more about end-to-end testing on Technopedia"
-[express]: https://expressjs.com "Express - Fast, unopinionated, minimalist web framework for Node.js"
+[e2e]: https://www.techopedia.com/definition/7035/end-to-end-test "Technopedia definition of end-to-end testing"
+[express]: https://expressjs.com "Express &ndash; Fast, unopinionated, minimalist web framework for Node.js"
 [facebook]: https://www.facebook.com/
 [crud]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete "Create, read, update and delete"
 [headless-chrome]: https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md "Headless Chromium"
@@ -237,11 +237,11 @@ The contents of the `dist` folder is meant to be run in an actual production env
 [mongoose-docs]: https://mongoosejs.com/docs/ "Mongoose documentation"
 [json-api]: https://jsonapi.org/ "A specification for building APIs in JSON"
 [mdn-web-docs]: https://developer.mozilla.org/
-[node-js]: https://nodejs.org/
+[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
 [nginx]: https://nginx.org/
-[npm]: https://www.npmjs.com/ "npm - The package manager for JavaScript"
+[npm]: https://www.npmjs.com/ "npm &ndash; The package manager for JavaScript"
 [stack-overflow]: https://stackoverflow.com/
-[tslint]: https://palantir.github.io/tslint/ "TSLint - An extensible linter for the TypeScript language"
+[tslint]: https://palantir.github.io/tslint/ "TSLint &ndash; An extensible linter for the TypeScript language"
 [ts-node]: https://github.com/TypeStrong/ts-node "TypeScript execution and REPL for node.js, with source map support"
 [traversy-media]: http://www.traversymedia.com/
 [traversy-video]: https://www.youtube.com/watch?v=j55fHUJqtyw&list=PLillGF-RfqbYSx-Ab1xWVanGKtowTsnNm "Full Stack Vue.js, Express & MongoDB"
@@ -254,13 +254,13 @@ The contents of the `dist` folder is meant to be run in an actual production env
 [vue-blog-post-2017]: https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08 "Upcoming TypeScript Changes in Vue 2.5"
 [vue-blog-post-2018]: https://medium.com/the-vue-point/plans-for-the-next-iteration-of-vue-js-777ffea6fabf "Plans for the Next Iteration of Vue.js"
 [vue-class-component]: https://github.com/vuejs/vue-class-component "ES / TypeScript decorator for class-style Vue components"
-[vue-cli]: https://cli.vuejs.org/ "Vue CLI - Standard Tooling for Vue.js Development"
-[vue-js]: https://vuejs.org "Vue.js - The Progressive JavaScript Framework"
+[vue-cli]: https://cli.vuejs.org/ "Vue CLI &ndash; Standard Tooling for Vue.js Development"
+[vue-js]: https://vuejs.org "Vue.js &ndash; The Progressive JavaScript Framework"
 [vue-notification]: https://github.com/euvl/vue-notification "Vue.js 2 library for showing notifications"
 [vue-progressbar]: https://github.com/hilongjw/vue-progressbar "A lightweight progress bar for Vue"
 [vue-router]: https://router.vuejs.org/ "The official router for Vue.js"
 [vue-test-utils]: https://vue-test-utils.vuejs.org/
-[vue-ts]: https://vuejs.org/v2/guide/typescript.html "Vue.js - TypeScript Support"
+[vue-ts]: https://vuejs.org/v2/guide/typescript.html "Vue.js &ndash; TypeScript Support"
 [vuex-mock-store]: https://github.com/posva/vuex-mock-store "Simple and straightforward Vuex Store mock for vue-test-utils"
 [vuex-property-decorator]: https://github.com/kaorun343/vue-property-decorator "Vue.js and Property Decorator"
 [vuepress]: https://vuepress.vuejs.org/ "Vue-powered Static Site Generator"
