@@ -116,7 +116,7 @@ The source files are located under the `src` folder.
 ### Starting the services
 You can start each service separetly in your browser using Vue's GUI tool:
 ```bash
-$ npm run vue:ui
+$ npm run ui
 ```
 Activate both `dev:client` and `dev:server` tasks to get everything up and running.
 
@@ -126,7 +126,7 @@ Here's a list of the default addresses provided by each service:
 |:-------------|:------------------------- |:---------------------------------------------------------
 | `dev:server` | http://localhost:5000/api | Provides API endpoints and communicates with the database
 | `dev:client` | http://localhost:8080     | Serves content with hot-reload for the browser
-| `vue:ui    ` | http://localhost:8000     | Manages tasks and scripts in the browser
+| `ui`         | http://localhost:8000     | Manages tasks and scripts in the browser
 
 See the [Client](../client/) and [Server](../server/) sections for more information.
 
