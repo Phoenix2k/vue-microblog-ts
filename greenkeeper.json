@@ -2,8 +2,12 @@
   "groups": {
     "default": {
       "packages": [
-        "dist/package.json",
         "package.json"
+      ]
+		},
+		"deployment": {
+      "packages": [
+        "dist/package.json"
       ]
     }
   }
