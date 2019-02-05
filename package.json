@@ -27,7 +27,7 @@
     "@types/cors": "^2.8.4",
     "@types/dotenv": "^6.1.0",
     "@types/express": "^4.16.1",
-    "@types/jest": "^23.3.13",
+    "@types/jest": "^24.0.0",
     "@types/mongoose": "^5.3.9",
     "@vue/cli-plugin-babel": "^3.3.0",
     "@vue/cli-plugin-e2e-cypress": "^3.3.0",
