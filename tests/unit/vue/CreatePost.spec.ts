@@ -18,8 +18,9 @@ describe( 'CreatePost.vue', () => {
 
 	it( 'contains the form to create new posts', () => {
 		const mocks = { $store: store };
-		const wrapper = shallowMount( CreatePost, { mocks } );
-		wrapper.setComputed( { getAjaxMessage: () => [] } );
+		const wrapper = shallowMount( CreatePost, { mocks, computed: {
+			getAjaxMessage() { return []; },
+		} } );
 		expect( wrapper.contains( 'form[name="create-post"]' ) ).toBe( true );
 	} );
 } );

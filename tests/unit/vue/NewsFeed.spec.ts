@@ -33,37 +33,37 @@ describe( 'NewsFeed.vue', () => {
 		},
 	} );
 
+	const mocks = { $store: store };
+
 	it( 'should contain the news feed wrapper', () => {
-		const mocks = { $store: store };
 		const wrapper = shallowMount( NewsFeed, { mocks } );
 		expect( wrapper.find( '.news-feed' ).exists() ).toBe( true );
 	} );
 
 	it( 'should contain the loading message', () => {
-		const mocks = { $store: store };
 		const wrapper = shallowMount( NewsFeed, { mocks } );
 		expect( wrapper.find( '.loading' ).exists() ).toBe( true );
 	} );
 
 	it( 'should not contain the loading message', () => {
-		const mocks = { $store: store };
-		const wrapper = shallowMount( NewsFeed, { mocks } );
-		wrapper.setComputed( { showLoading: false } );
+		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
+			showLoading() { return false; },
+		} } );
 		expect( wrapper.find( '.loading' ).exists() ).toBe( false );
 	} );
 
 	it( 'should contain an error message', () => {
-		const mocks = { $store: store };
-		const wrapper = shallowMount( NewsFeed, { mocks } );
-		wrapper.setComputed( { showError: true } );
+		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
+			showError() { return true; },
+		} } );
 		expect( wrapper.find( '.error' ).exists() ).toBe( true );
 	} );
 
 	it( 'should contain the posts wrapper', () => {
-		const mocks = { $store: store };
-		const wrapper = shallowMount( NewsFeed, { mocks } );
+		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
+			getPosts() { return []; },
+		} } );
 		wrapper.setData( { uiState: UIState.READY } );
-		wrapper.setComputed( { getPosts: [] } );
 		expect( wrapper.find( '.no-posts' ).exists() ).toBe( true );
 	} );
 
