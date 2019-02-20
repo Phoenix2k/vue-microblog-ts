@@ -1,9 +1,6 @@
-vue-microblog-ts
+vue-microblog-ts [![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url] [![Build status][travis-badge]][travis-url]
 ================
 Small microblogging service written in [TypeScript][typescript] based on [Express][express], [Mongoose][mongoose] and [Vue.js][vue-js].
-
-[![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url]
-[![Build status][travis-badge]][travis-url]
 
 >This project was bootstrapped with [Vue CLI 3][vue-cli]
 
