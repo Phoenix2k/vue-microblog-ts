@@ -8,7 +8,7 @@
   "dependencies": {
     "axios": "^0.19.0-beta.1",
     "cors": "^2.8.5",
-    "dotenv": "^6.2.0",
+    "dotenv": "^7.0.0",
     "env-var": "^3.4.2",
     "express": "^4.16.4",
     "mongoose": "^5.4.14",
