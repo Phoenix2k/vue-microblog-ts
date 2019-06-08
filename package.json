@@ -46,7 +46,7 @@
     "typescript": "^3.4.2",
     "vue-class-component": "^7.0.2",
     "vue-template-compiler": "^2.6.10",
-    "vuepress": "^0.14.10",
+    "vuepress": "^1.0.0",
     "vuex-class": "^0.3.2",
     "vuex-mock-store": "0.0.7",
     "webpack-dev-middleware": "^3.6.2"
