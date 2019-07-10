@@ -13,7 +13,6 @@ import { IndexRoute } from './routes/index';
  * @class Server
  */
 export class Server {
-
 	/**
 	 * Express instance.
 	 */
@@ -31,7 +30,11 @@ export class Server {
 		this.app = express();
 		this.config();
 		this.mongoSetup()
-			.then( response => console.log( `Successfully connected to ${ response.connections[0].host } on port ${ response.connections[0].port }` ) )
+			.then( response =>
+				console.log(
+					`Successfully connected to ${response.connections[0].host} on port ${response.connections[0].port}`,
+				),
+			)
 			.catch( error => {
 				console.log( error );
 				process.exit( 1 );
@@ -48,8 +51,12 @@ export class Server {
 	 * @returns {void}
 	 */
 	private config(): void {
-		const ENVIRONMENT = env.get( 'NODE_ENV' ).required().asString();
-		const PUBLIC_FOLDER = 'production' === ENVIRONMENT ? '../public' : '../../dist/public';
+		const ENVIRONMENT = env
+			.get( 'NODE_ENV' )
+			.required()
+			.asString();
+		const PUBLIC_FOLDER =
+			'production' === ENVIRONMENT ? '../public' : '../../dist/public';
 		this.app.use( express.static( path.join( __dirname, PUBLIC_FOLDER ) ) );
 		this.app.use( express.json() );
 		this.app.use( cors() );
@@ -65,7 +72,7 @@ export class Server {
 	private init(): void {
 		const PORT = env.get( 'PORT', '5000' ).asIntPositive();
 		this.app.listen( PORT, () => {
-			console.log( `Server started on port ${ PORT }` );
+			console.log( `Server started on port ${PORT}` );
 		} );
 	}
 
@@ -77,9 +84,13 @@ export class Server {
 	 * @returns {Promise<any>} Mongoose connection.
 	 */
 	private async mongoSetup(): Promise<any> {
-		const MONGODB_URI = env.get( 'MONGODB_URI' ).required().asString();
+		const MONGODB_URI = env
+			.get( 'MONGODB_URI' )
+			.required()
+			.asString();
 		return mongoose.connect( MONGODB_URI, {
 			useNewUrlParser: true,
+			useUnifiedTopology: true,
 		} );
 	}
 
