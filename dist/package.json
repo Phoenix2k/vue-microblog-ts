@@ -4,7 +4,7 @@
   "dependencies": {
     "cors": "^2.8.4",
     "dotenv": "^8.0.0",
-    "env-var": "^3.4.0",
+    "env-var": "^4.0.1",
     "express": "^4.16.4",
     "mongoose": "^5.3.7"
   },
