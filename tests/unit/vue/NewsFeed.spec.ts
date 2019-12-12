@@ -1,4 +1,5 @@
 import NewsFeed from '@/client/components/NewsFeed.vue';
+import { feedTimeout } from '@/client/configs/timeouts';
 import { SinglePost, UIState } from '@/client/types';
 import { shallowMount } from '@vue/test-utils';
 import { Store } from 'vuex-mock-store';
@@ -64,7 +65,9 @@ describe( 'NewsFeed.vue', () => {
 			getPosts() { return []; },
 		} } );
 		wrapper.setData( { uiState: UIState.READY } );
-		expect( wrapper.find( '.no-posts' ).exists() ).toBe( true );
+		setTimeout( () => {
+			expect( wrapper.find( '.no-posts' ).exists() ).toBe( true );
+		}, feedTimeout );
 	} );
 
 /**

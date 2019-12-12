@@ -37,6 +37,7 @@
 import { AxiosResponse } from 'axios';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { Action, Getter, namespace } from 'vuex-class';
+import { feedTimeout } from '../configs/timeouts';
 import { AjaxState, SinglePost, UIState } from '../types';
 
 @Component
@@ -137,13 +138,13 @@ export default class NewsFeed extends Vue {
 				console.info( 'Showing error screen...' );
 				setTimeout( () => {
 					this.uiState = UIState.ERROR;
-				}, 600 );
+				}, feedTimeout );
 				break;
 			default:
 				console.info( 'Showing posts...' );
 				setTimeout( () => {
 					this.uiState = UIState.READY;
-				}, 600 );
+				}, feedTimeout );
 				break;
 		}
 	}
