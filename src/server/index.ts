@@ -70,7 +70,7 @@ export class Server {
 	 * @returns {void}
 	 */
 	private init(): void {
-		const PORT = env.get( 'PORT', '5000' ).asIntPositive();
+		const PORT = env.get( 'PORT' ).asIntPositive() || '5000';
 		this.app.listen( PORT, () => {
 			console.log( `Server started on port ${PORT}` );
 		} );
