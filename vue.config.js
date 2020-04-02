@@ -1,24 +1,24 @@
 module.exports = {
-	devServer: {
-		overlay: {
-			errors: true,
-			warnings: true
-		},
-		proxy: {
-			"^/api": {
-				target: "http://localhost:5000",
-				secure: false
-			}
-		}
-	},
-	lintOnSave: "production" !== process.env.NODE_ENV,
-	publicPath: process.env.BASE_URL,
-	outputDir: "./dist/public",
-	pages: {
-		index: {
-			entry: "./src/client/main.ts",
-			filename: "index.html",
-			template: "./public/index.html"
-		}
-	}
+  devServer: {
+    overlay: {
+      errors: true,
+      warnings: true
+    },
+    proxy: {
+      '^/api': {
+        secure: false,
+        target: 'http://localhost:5000'
+      }
+    }
+  },
+  lintOnSave: 'production' !== process.env.NODE_ENV,
+  outputDir: './dist/public',
+  pages: {
+    index: {
+      entry: './src/client/main.ts',
+      filename: 'index.html',
+      template: './public/index.html'
+    }
+  },
+  publicPath: process.env.BASE_URL
 };

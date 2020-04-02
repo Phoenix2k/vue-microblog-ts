@@ -1,22 +1,18 @@
 {
-	"compilerOptions": {
-		"baseUrl": "./",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"moduleResolution": "node",
-		"noImplicitAny": false,
-		"removeComments": true,
-		"sourceMap": false,
-		"strict": true,
-		"suppressImplicitAnyIndexErrors": true,
-		"target": "esnext",
-		"module": "commonjs",
-		"outDir": "dist/server",
-		"typeRoots": []
-	},
-	"exclude": [
-		"node_modules",
-		"src/client",
-		"**/*.spec.ts"
-	]
+  "compilerOptions": {
+    "baseUrl": "./",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": false,
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "dist/server",
+    "typeRoots": []
+  },
+  "exclude": ["node_modules", "src/client", "**/*.spec.ts"]
 }
