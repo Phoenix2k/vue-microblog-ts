@@ -4,76 +4,90 @@ import { SinglePost, UIState } from '@/client/types';
 import { shallowMount } from '@vue/test-utils';
 import { Store } from 'vuex-mock-store';
 
-describe( 'NewsFeed.vue', () => {
+describe('NewsFeed.vue', () => {
+  const posts: SinglePost[] = [
+    {
+      body: '<p>Some body text</p>',
+      createdAt: '2018-01-01T00:00:00.000Z',
+      id: '1',
+      title: 'Post 1'
+    },
+    {
+      body: '<p>Some body text</p>',
+      createdAt: '2018-12-24T22:00:00.000Z',
+      id: '2',
+      title: 'Post 2'
+    }
+  ];
 
-	const posts: SinglePost[] = [
-		{
-			body: '<p>Some body text</p>',
-			createdAt: '2018-01-01T00:00:00.000Z',
-			id: '1',
-			title: 'Post 1',
-		},
-		{
-			body: '<p>Some body text</p>',
-			createdAt: '2018-12-24T22:00:00.000Z',
-			id: '2',
-			title: 'Post 2',
-		},
-	];
+  const store = new Store({
+    getters: {
+      'NewsFeedStore/getAjaxStatus': '',
+      'NewsFeedStore/getAjaxMessage': '',
+      'NewsFeedStore/getPosts': () => posts
+    },
+    state: {
+      NewsFeedStore: {
+        posts
+      }
+    }
+  });
 
-	const store = new Store( {
-		getters: {
-			'NewsFeedStore/getAjaxStatus': '',
-			'NewsFeedStore/getAjaxMessage': '',
-			'NewsFeedStore/getPosts': () => posts,
-		},
-		state: {
-			NewsFeedStore: {
-				posts,
-			},
-		},
-	} );
+  const mocks = { $store: store };
 
-	const mocks = { $store: store };
+  it('should contain the news feed wrapper', () => {
+    const wrapper = shallowMount(NewsFeed, { mocks });
+    expect(wrapper.find('.news-feed').exists()).toBe(true);
+  });
 
-	it( 'should contain the news feed wrapper', () => {
-		const wrapper = shallowMount( NewsFeed, { mocks } );
-		expect( wrapper.find( '.news-feed' ).exists() ).toBe( true );
-	} );
+  it('should contain the loading message', () => {
+    const wrapper = shallowMount(NewsFeed, { mocks });
+    expect(wrapper.find('.loading').exists()).toBe(true);
+  });
 
-	it( 'should contain the loading message', () => {
-		const wrapper = shallowMount( NewsFeed, { mocks } );
-		expect( wrapper.find( '.loading' ).exists() ).toBe( true );
-	} );
+  it('should not contain the loading message', () => {
+    const wrapper = shallowMount(NewsFeed, {
+      mocks,
+      computed: {
+        showLoading() {
+          return false;
+        }
+      }
+    });
+    expect(wrapper.find('.loading').exists()).toBe(false);
+  });
 
-	it( 'should not contain the loading message', () => {
-		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
-			showLoading() { return false; },
-		} } );
-		expect( wrapper.find( '.loading' ).exists() ).toBe( false );
-	} );
+  it('should contain an error message', () => {
+    const wrapper = shallowMount(NewsFeed, {
+      mocks,
+      computed: {
+        showError() {
+          return true;
+        }
+      }
+    });
+    expect(wrapper.find('.error').exists()).toBe(true);
+  });
 
-	it( 'should contain an error message', () => {
-		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
-			showError() { return true; },
-		} } );
-		expect( wrapper.find( '.error' ).exists() ).toBe( true );
-	} );
+  it('should contain the posts wrapper', () => {
+    const wrapper = shallowMount(NewsFeed, {
+      mocks,
+      computed: {
+        getPosts() {
+          return [];
+        }
+      }
+    });
+    wrapper.setData({ uiState: UIState.READY });
+    setTimeout(() => {
+      expect(wrapper.find('.no-posts').exists()).toBe(true);
+    }, feedTimeout);
+  });
 
-	it( 'should contain the posts wrapper', () => {
-		const wrapper = shallowMount( NewsFeed, { mocks, computed: {
-			getPosts() { return []; },
-		} } );
-		wrapper.setData( { uiState: UIState.READY } );
-		setTimeout( () => {
-			expect( wrapper.find( '.no-posts' ).exists() ).toBe( true );
-		}, feedTimeout );
-	} );
-
-/**
- * @todo Refactor old tests to work with new state structure
- */
-/*
+  /**
+   * @todo Refactor old tests to work with new state structure
+   */
+  /*
 	it( 'posts should contain two elements', () => {
 		const mocks = { $store: store };
 		const wrapper = mount( NewsFeed, { mocks } );
@@ -118,4 +132,4 @@ describe( 'NewsFeed.vue', () => {
 		expect( wrapper.find( '.post:last-child .date-value__time' ).text() ).toMatch( '22:00' );
 	} );
 */
-} );
+});

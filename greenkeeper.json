@@ -1,14 +1,10 @@
 {
   "groups": {
     "default": {
-      "packages": [
-        "package.json"
-      ]
-		},
-		"deployment": {
-      "packages": [
-        "dist/package.json"
-      ]
+      "packages": ["package.json"]
+    },
+    "deployment": {
+      "packages": ["dist/package.json"]
     }
   }
 }

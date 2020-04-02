@@ -10,14 +10,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 import NewsFeed from '../components/NewsFeed.vue';
 
-@Component( {
+@Component({
 	components: {
-		'news-feed': NewsFeed,
-	},
-} )
+		'news-feed': NewsFeed
+	}
+})
 export default class Home extends Vue {
 	private created() {
-		console.log( 'Home view created' );
+		console.log('Home view created');
 	}
 }
 </script>

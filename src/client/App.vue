@@ -4,7 +4,7 @@
 			<router-link to="/">Home</router-link> |
 			<router-link to="/admin">Admin</router-link>
 		</div>
-		<router-view/>
+		<router-view />
 		<animations />
 		<icons />
 		<notification-templates :duration="notificationDuration" />
@@ -25,17 +25,17 @@ import './scss/base.scss';
 import './scss/notifications.scss';
 
 // Global components
-@Component( {
+@Component({
 	components: {
 		Animations,
 		Icons,
-		NotificationTemplates,
-	},
-} )
+		NotificationTemplates
+	}
+})
 export default class App extends Vue {
-	@Getter( 'getNotificationDuration' ) private notificationDuration;
+	@Getter('getNotificationDuration') private notificationDuration;
 	private created() {
-		console.info( 'Application started' );
+		console.info('Application started');
 	}
 }
 </script>

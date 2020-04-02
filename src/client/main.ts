@@ -9,11 +9,11 @@ import store from './store';
 
 Vue.config.productionTip = false;
 
-Vue.use( VueNotification );
-Vue.use( VueProgressBar, VueProgressBarConfig );
+Vue.use(VueNotification);
+Vue.use(VueProgressBar, VueProgressBarConfig);
 
-export default new Vue( {
-	router,
-	store,
-	render: ( h ) => h( App ),
-} ).$mount( '#app' );
+export default new Vue({
+  router,
+  store,
+  render: (h) => h(App)
+}).$mount('#app');
