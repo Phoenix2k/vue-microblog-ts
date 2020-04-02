@@ -6,6 +6,7 @@ tests/e2e/videos/*
 
 !.env.example
 !.gitkeep
+!.prettierignore
 !.travis.yml
 !dist/package.json
 !dist/package-lock.json
