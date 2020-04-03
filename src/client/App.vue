@@ -1,15 +1,15 @@
 <template lang="html">
-	<div id="app">
-		<div class="nav">
-			<router-link to="/">Home</router-link> |
-			<router-link to="/admin">Admin</router-link>
-		</div>
-		<router-view />
-		<animations />
-		<icons />
-		<notification-templates :duration="notificationDuration" />
-		<vue-progress-bar></vue-progress-bar>
-	</div>
+  <div id="app">
+    <div class="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/admin">Admin</router-link>
+    </div>
+    <router-view />
+    <animations />
+    <icons />
+    <notification-templates :duration="notificationDuration" />
+    <vue-progress-bar></vue-progress-bar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,30 +26,30 @@ import './scss/notifications.scss';
 
 // Global components
 @Component({
-	components: {
-		Animations,
-		Icons,
-		NotificationTemplates
-	}
+  components: {
+    Animations,
+    Icons,
+    NotificationTemplates
+  }
 })
 export default class App extends Vue {
-	@Getter('getNotificationDuration') private notificationDuration;
-	private created() {
-		console.info('Application started');
-	}
+  @Getter('getNotificationDuration') private notificationDuration;
+  private created() {
+    console.info('Application started');
+  }
 }
 </script>
 
 <style scoped lang="scss">
 #app {
-	text-align: center;
+  text-align: center;
 }
 
 .nav {
-	margin: 2em auto;
+  margin: 2em auto;
 
-	a {
-		font-weight: bold;
-	}
+  a {
+    font-weight: bold;
+  }
 }
 </style>
