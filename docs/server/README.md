@@ -23,16 +23,16 @@ DELETE /api
 ```
 
 #### Params
-| Params | Type     | Description
-|:------:|:--------:|:-----------
-| postId | `String` | ID of the post being deleted
+| Params |   Type   | Description                  |
+|:------:|:--------:|:-----------------------------|
+| postId | `String` | ID of the post being deleted |
 
 #### Response code
-| Code | Description
-|:----:|:------------
-| 200  | Post successfully deleted
-| 404  | `postId` not found
-| 500  | Server not available
+| Code | Description               |
+|:----:|:--------------------------|
+| 200  | Post successfully deleted |
+| 404  | `postId` not found        |
+| 500  | Server not available      |
 
 #### Return
 Response code only.
@@ -44,10 +44,10 @@ GET /api
 ```
 
 #### Response code
-| Code | Description
-|:----:|:------------
-| 200  | Request OK
-| 500  | Server not available
+| Code | Description          |
+|:----:|:---------------------|
+| 200  | Request OK           |
+| 500  | Server not available |
 
 #### Return
 Type: `JSON` or `Error`
@@ -59,18 +59,18 @@ POST /api
 ```
 
 #### Params
-| Params | Type     | Description
-|:-------|:--------:|:-----------
-| body   | `String` | Body text
-| title  | `String` | Title of the post
+| Params |   Type   | Description       |
+|:-------|:--------:|:------------------|
+| body   | `String` | Body text         |
+| title  | `String` | Title of the post |
 
 Mongoose will automatically check the values and add both the `createdAt` date and `_id` values if everything cheks out.
 
 #### Response code
-| Code | Description
-|:----:|:------------
-| 201  | Post created
-| 500  | Server not available
+| Code | Description          |
+|:----:|:---------------------|
+| 201  | Post created         |
+| 500  | Server not available |
 
 #### Return
 Response code only.
@@ -82,15 +82,15 @@ PUT /api
 ```
 
 #### Params
-| Params | Type     | Description
-|:------:|:--------:|:-----------
-| postId | `String` | ID of the post being deleted
+| Params |   Type   | Description                  |
+|:------:|:--------:|:-----------------------------|
+| postId | `String` | ID of the post being deleted |
 
 #### Response code
-| Code | Description
-|:----:|:-------------------------
-| 200  | Post successfully updated
-| 500  | Server not available
+| Code | Description               |
+|:----:|:--------------------------|
+| 200  | Post successfully updated |
+| 500  | Server not available      |
 
 #### Return
 Response code only.
@@ -115,9 +115,7 @@ Fix errors automatically:
 ```bash
 $ npm run lint:fix:server
 ```
-This will mainly fix aesthetic issues reported by [TSLint][tslint]. If you have actual errors in your code, you will need to fix them manually.
-
-The `tslint.conf` configuration file is shared between both the client and server and can be found in the root of the project.
+This will mainly fix aesthetic issues reported by [ESLint][eslint]. If you have actual errors in your code, you will need to fix them manually.
 
 ### Testing
 See the [testing section](../home/#testing) in the main documentation.
@@ -131,13 +129,13 @@ The production files will be available under the `dist/server` folder.
 
 See the [main documentation](../home/#building-for-production) for more details on how to start the server.
 
+[eslint]: https://eslint.org/ "Find and fix problems in your JavaScript code"
 [express]: https://expressjs.com "Express &ndash; Fast, unopinionated, minimalist web framework for Node.js"
 [mongodb]: https://www.mongodb.com "MongoDB"
-[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
 [mongoose-schemas]: https://mongoosejs.com/docs/guide.html "Mongoose schemas"
 [mongoose-validation]: https://mongoosejs.com/docs/validation.html "Mongoose validation"
-[nodemon]: https://nodemon.io/ "Nodemon is a utility that will monitor for any changes in your source and automatically restart your server"
+[mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
 [node-js]: https://nodejs.org/ "Node.js"
+[nodemon]: https://nodemon.io/ "Nodemon is a utility that will monitor for any changes in your source and automatically restart your server"
 [ts-node]: https://github.com/TypeStrong/ts-node "TypeScript execution and REPL for Node.js"
-[tslint]: https://palantir.github.io/tslint/ "An extensible linter for the TypeScript language."
 [typescript]: https://www.typescriptlang.org "TypeScript"

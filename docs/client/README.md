@@ -8,10 +8,10 @@ Most of the original files and functions are still here, but you will most likel
 
 The project was bootstrapped with the following options:
 * [Cypress][cypress] for end-to-end testing
+* [ESLint][eslint] for handling errors
 * [Jest][jest] for unit testing
 * Progressive Web App ([PWA][pwa]) Support
 * [Sass][sass] for style compilation
-* [TSLint][tslint] for handling errors
 * [Vue Router][vue-router] for handling routes
 * [Vuex][vuex] for state handling
 
@@ -34,9 +34,7 @@ Fix errors automatically:
 ```bash
 $ npm run lint:fix:client
 ```
-This will mainly fix aesthetic issues reported by [TSLint][tslint]. If you have actual errors in your code, you will need to fix them manually.
-
-The `tslint.conf` configuration file is shared between both the client and server and can be found in the root of the project.
+This will mainly fix aesthetic issues reported by [ESLint][eslint]. If you have actual errors in your code, you will need to fix them manually.
 
 ### Testing
 See the [testing section](../home/#testing) in the main documentation.
@@ -57,12 +55,12 @@ $ npm run ui
 ```
 
 [cypress]: https://www.cypress.io/ "Fast, easy and reliable testing for anything that runs in a browser."
+[eslint]: https://eslint.org/ "Find and fix problems in your JavaScript code"
 [jest]: https://jestjs.io/ "Delightful JavaScript Testing"
 [pwa]: https://en.wikipedia.org/wiki/Progressive_Web_Apps "Progressive Web Apps"
 [sass]: https://sass-lang.com/ "CSS with superpowers"
-[tslint]: https://palantir.github.io/tslint/ "An extensible linter for the TypeScript language."
+[typescript]: https://www.typescriptlang.org "TypeScript"
 [vue-cli]: https://cli.vuejs.org/ "Standard Tooling for Vue.js Development"
 [vue-gui]: https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui
 [vue-router]: https://router.vuejs.org/ "The official router for Vue.js"
 [vuex]: https://vuex.vuejs.org/ "State management pattern + library for Vue.js applications"
-[typescript]: https://www.typescriptlang.org "TypeScript"
