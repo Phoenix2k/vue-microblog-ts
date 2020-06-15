@@ -1,4 +1,4 @@
-vue-microblog-ts [![Greenkeeper badge][greenkeeper-badge]][greenkeeper-url] [![Build status][travis-badge]][travis-url]
+vue-microblog-ts [![Build status][travis-badge]][travis-url]
 ================
 Small microblogging service written in [TypeScript][typescript] based on [Express][express], [Mongoose][mongoose] and [Vue.js][vue-js].
 
@@ -11,8 +11,6 @@ See [GitHub pages][docs].
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 
 [docs]: https://phoenix2k.github.io/vue-microblog-ts/
-[greenkeeper-badge]: https://badges.greenkeeper.io/Phoenix2k/vue-microblog-ts.svg
-[greenkeeper-url]: https://greenkeeper.io/
 [mongoose]: https://mongoosejs.com/ "Elegant mongodb object modeling for Node.js"
 [express]: https://expressjs.com "Express &ndash; Fast, unopinionated, minimalist web framework for Node.js"
 [travis-badge]: https://travis-ci.org/Phoenix2k/vue-microblog-ts.svg?branch=master
